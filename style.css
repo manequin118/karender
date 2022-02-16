@@ -1,0 +1,27 @@
+.arrow {
+  width: auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+.currentMonth {
+  width: 200px;
+}
+
+table th {
+  border: 1px solid;
+}
+
+table td {
+  border: 1px solid;
+  text-align: center;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.today {
+  background-color: cyan;
+}
