@@ -7,9 +7,9 @@ $date = new DateTime("2022-1-1");
 $dateFormat = $date->format("Y/m");
 $tt = $date->format("t");
 
-//曜日を配列に代入
-$youbi = array(1 => "日", 2 => "月", 3 => "火", 4 => "水", 5 => "木", 6 => "金", 7 => "土");
-print_r($youbi);
+
+$y = array(1 => "月", 2 => "火", 3 => "水", 4 => "木", 5 => "金", 6 => "土", 7 => "日");
+print_r($y);
 
 //翌月の情報を取る
 // $plusMonth = $date->modify('+1 months');
@@ -24,57 +24,55 @@ print_r($youbi);
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" type="text/css" href="./style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
 <body>
 
-  <?php
+    <?php
   for ($n = 0; $n < 12; $n++) {
     //1月からの月間の日数をループで取得
     $endMonthDay = date('d', mktime(0, 0, 0, date('m') + $n, 0, date('Y')));
 
   ?>
     <div class="currentMonth">
-      <p><?php echo $n + 1; ?>月</p>
-      <table>
-        <tr>
-          <?php
+        <p><?php echo $n + 1; ?>月</p>
+        <table>
+            <tr>
+                <?php
           for ($e = 1; $e <= 7; $e++) {
             //2022-1-1からの曜日を取得
-            // $youbi = date('D', mktime(0, 0, 0, $n + 1, $e, date("Y"))); 
-          ?>
-            <th><?php echo $youbi[$e]; ?></th>
-          <?php }  ?>
-        </tr>
-        <tr>
-          <?php
+            $youbi = date('D', mktime(0, 0, 0, $n + 1, $e, date("Y"))); ?>
+                <th><?php echo $youbi; ?></th>
+                <?php }  ?>
+            </tr>
+            <tr>
+                <?php
           //各月の月間日数分ループで回す
           for ($i = 1; $i <= $endMonthDay; $i++) {
-
             //条件分岐で本日のセルのみ色を変える
             if ($n + 1 == date("m") && $i == date("d")) :
           ?>
-              <td class="today"> <?php echo $i; ?></td>
-            <?php else : ?>
-              <td> <?php echo $i; ?></td>
-            <?php endif; ?>
-            <?php
+                <td class="today"> <?php echo $i; ?></td>
+                <?php else : ?>
+                <td> <?php echo $i; ?></td>
+                <?php endif; ?>
+                <?php
             //カレンダーっぽくするために1周間ごとに改行を入れる
             if ($i % 7 == 0) { ?>
-          <?php
+                <?php
               echo "</tr>";
             }
           }
           ?>
-        </tr>
-      </table>
+            </tr>
+        </table>
     </div>
-  <?php } ?>
+    <?php } ?>
 </body>
 
 </html>

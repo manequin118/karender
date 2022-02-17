@@ -8,9 +8,8 @@ $dateFormat = $date->format("Y/m");
 $tt = $date->format("t");
 
 //曜日を配列に代入
-$youbi = array(0 => "日", 1 => "月", 2 => "火", 3 => "水", 4 => "木", 5 => "金", 6 => "土");
-// print_r($youbi);
-
+$youbi = array(1 => "日", 2 => "月", 3 => "火", 4 => "水", 5 => "木", 6 => "金", 7 => "土");
+print_r($youbi);
 
 //翌月の情報を取る
 // $plusMonth = $date->modify('+1 months');
@@ -38,14 +37,14 @@ $youbi = array(0 => "日", 1 => "月", 2 => "火", 3 => "水", 4 => "木", 5 => 
     for ($n = 0; $n < 12; $n++) {
         //1月からの月間の日数をループで取得
         $endMonthDay = date('d', mktime(0, 0, 0, date('m') + $n, 0, date('Y')));
-        $y = date("w", mktime(0, 0, 0, $n + 1, 1, date("Y")));
+
     ?>
     <div class="currentMonth">
         <p><?php echo $n + 1; ?>月</p>
         <table>
             <tr>
                 <?php
-                    for ($e = 0; $e < 7; $e++) {
+                    for ($e = 1; $e <= 7; $e++) {
                         //2022-1-1からの曜日を取得
                         // $youbi = date('D', mktime(0, 0, 0, $n + 1, $e, date("Y"))); 
                     ?>
@@ -53,34 +52,26 @@ $youbi = array(0 => "日", 1 => "月", 2 => "火", 3 => "水", 4 => "木", 5 => 
                 <?php }  ?>
             </tr>
             <tr>
-                <!-- 空白のセルを曜日番号の数入れる -->
-                <?php for ($m = 0; $m < $y; $m++) { ?>
-                <td>&nbsp;</td>
-                <?php } ?>
-
-                <?php for ($q = 1; $q <= (7 - $y); $q++) { ?>
-                <td><?php echo $q; ?></td>
-                <?php } ?>
-            </tr>
-            <tr>
                 <?php
                     //各月の月間日数分ループで回す
-                    for ($i = (7 - $y); $i < $endMonthDay; $i++) {
-                        $w = date("w", mktime(0, 0, 0, $n + 1, $i, date("Y")));
+                    for ($i = 1; $i <= $endMonthDay; $i++) {
+                        foreach ($youbi as $key => $value) {
+                            if (!$key == $i) { ?>
+                <!-- <td> <?php echo $i; ?></td> -->
+                <td> &nbsp;&nbsp;</td>
+                <?php        }
+                        }
 
-                        //条件分岐で本日のセルのみ色を変える
-                        // if ($n + 1 == date("m") && $i == date("d")) :
+                        ?>
+
+                <?php
+                        //カレンダーっぽくするために1周間ごとに改行を入れる
+                        if ($i % 7 == 0) { ?>
+                <?php
+                            echo "</tr>";
+                        }
+                    }
                     ?>
-
-                <td> <?php echo $i + 1; ?></td>
-
-                <!-- カレンダーっぽくするために1周間ごとに改行を入れる -->
-
-                <?php if ($w == 5) { ?>
-                <?php echo "</tr>";
-                        } ?>
-
-                <?php   } ?>
             </tr>
         </table>
     </div>

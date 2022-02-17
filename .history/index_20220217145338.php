@@ -55,7 +55,10 @@ print_r($youbi);
           <?php
           //各月の月間日数分ループで回す
           for ($i = 1; $i <= $endMonthDay; $i++) {
-
+            foreach ($youbi as $key => $value) {
+              if (!$key == $i) {
+              }
+            }
             //条件分岐で本日のセルのみ色を変える
             if ($n + 1 == date("m") && $i == date("d")) :
           ?>

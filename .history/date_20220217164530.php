@@ -39,6 +39,7 @@ $youbi = array(0 => "日", 1 => "月", 2 => "火", 3 => "水", 4 => "木", 5 => 
         //1月からの月間の日数をループで取得
         $endMonthDay = date('d', mktime(0, 0, 0, date('m') + $n, 0, date('Y')));
         $y = date("w", mktime(0, 0, 0, $n + 1, 1, date("Y")));
+
     ?>
     <div class="currentMonth">
         <p><?php echo $n + 1; ?>月</p>
@@ -46,6 +47,7 @@ $youbi = array(0 => "日", 1 => "月", 2 => "火", 3 => "水", 4 => "木", 5 => 
             <tr>
                 <?php
                     for ($e = 0; $e < 7; $e++) {
+
                         //2022-1-1からの曜日を取得
                         // $youbi = date('D', mktime(0, 0, 0, $n + 1, $e, date("Y"))); 
                     ?>
@@ -58,29 +60,22 @@ $youbi = array(0 => "日", 1 => "月", 2 => "火", 3 => "水", 4 => "木", 5 => 
                 <td>&nbsp;</td>
                 <?php } ?>
 
-                <?php for ($q = 1; $q <= (7 - $y); $q++) { ?>
-                <td><?php echo $q; ?></td>
-                <?php } ?>
-            </tr>
-            <tr>
                 <?php
                     //各月の月間日数分ループで回す
-                    for ($i = (7 - $y); $i < $endMonthDay; $i++) {
-                        $w = date("w", mktime(0, 0, 0, $n + 1, $i, date("Y")));
-
+                    for ($i = 0; $i < $endMonthDay; $i++) {
                         //条件分岐で本日のセルのみ色を変える
                         // if ($n + 1 == date("m") && $i == date("d")) :
                     ?>
-
                 <td> <?php echo $i + 1; ?></td>
 
-                <!-- カレンダーっぽくするために1周間ごとに改行を入れる -->
-
-                <?php if ($w == 5) { ?>
-                <?php echo "</tr>";
-                        } ?>
-
-                <?php   } ?>
+                <?php
+                        //カレンダーっぽくするために1周間ごとに改行を入れる
+                        if (($i + 1) % 7 == 0) { ?>
+                <?php
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
             </tr>
         </table>
     </div>
