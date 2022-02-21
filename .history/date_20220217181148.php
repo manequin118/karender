@@ -67,7 +67,7 @@ $youbi = array(0 => "日", 1 => "月", 2 => "火", 3 => "水", 4 => "木", 5 => 
                 <?php
                     //各月の月間日数分ループで回す
                     for ($i = (7 - $y); $i < $endMonthDay; $i++) {
-                        $w = date("w", mktime(0, 0, 0, $n + 1, $i, date("Y")));
+                        $w = date("W", mktime(0, 0, 0, $n + 1, $i, date("Y")));
                         print_r($w);
 
                         //条件分岐で本日のセルのみ色を変える
