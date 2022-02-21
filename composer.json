@@ -1,0 +1,6 @@
+{
+    "require": {
+        "azuyalabs/yasumi": "^2.4",
+        "psy/psysh": "^0.11.1"
+    }
+}

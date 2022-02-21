@@ -1,0 +1,44 @@
+.arrow {
+  width: auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+.currentMonth {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+table th {
+  border: 1px solid;
+  height: 100px;
+  text-align: left;
+  vertical-align: baseline;
+  background-color: #efef;
+}
+
+table td {
+  border: 1px solid;
+  text-align: center;
+  height: 100px;
+  text-align: left;
+  vertical-align: baseline;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.today {
+  background-color: cyan;
+}
+
+.red {
+  background-color: orangered;
+}
