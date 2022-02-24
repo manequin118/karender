@@ -42,3 +42,39 @@ table {
 .red {
   background-color: #ffa8a8;
 }
+
+/*post.php*/
+.post-container {
+  width: 1000px;
+  margin: 100px auto;
+}
+
+.post-contents input {
+  display: block;
+  width: 50%;
+  margin-bottom: 20px;
+  height: 35px;
+  border-color: black;
+}
+
+form {
+  width: 800px;
+  margin: 0 auto;
+  padding: 50px;
+  border: 1px solid lightgrey;
+  background-color: lightgrey;
+}
+
+button {
+  width: 100px;
+  background-color: #000;
+  color: #dddddd;
+  cursor: pointer;
+}
+
+.post-container a {
+  text-align: right;
+  display: block;
+  padding-right: 50px;
+  cursor: pointer;
+}
