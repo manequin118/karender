@@ -2,6 +2,7 @@
   width: auto;
   display: flex;
   justify-content: space-around;
+  margin-top: 100px;
 }
 
 .currentMonth {
@@ -77,4 +78,9 @@ button {
   display: block;
   padding-right: 50px;
   cursor: pointer;
+}
+
+.shcedule-container {
+  width: 1000px;
+  margin: 0 auto;
 }
