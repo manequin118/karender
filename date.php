@@ -9,6 +9,19 @@ $youbi = array(0 => "日", 1 => "月", 2 => "火", 3 => "水", 4 => "木", 5 => 
 require 'vendor/autoload.php';
 
 $holidays = \Yasumi\Yasumi::create('Japan', date("Y"), 'ja_JP');
+$month = date("m");
+var_dump($month);
+if (isset($_GET['page'])) {
+    var_dump("!isset");
+    if ($_GET["page"] >= 1) {
+        var_dump('$_GET["page"]');
+        $month = $_GET["page"];
+    }
+} else {
+    $month = date("m");
+}
+var_dump($_GET["page"]);
+
 
 
 ?>
@@ -24,73 +37,72 @@ $holidays = \Yasumi\Yasumi::create('Japan', date("Y"), 'ja_JP');
 </head>
 
 <body>
-    <h1>2022年カレンダー</h1>
+    <h1><?PHP echo date("Y"); ?>年カレンダー</h1>
     <?php
-    for ($n = 0; $n < 12; $n++) {
-        //1月からの月間の日数をループで取得
-        $endMonthDay = date('d', mktime(0, 0, 0, date('m') + $n, 0, date('Y')));
-        $y = date("w", mktime(0, 0, 0, $n + 1, 1, date("Y")));
-
+    // for ($n = 0; $n < 12; $n++) {
+    //1月からの月間の日数をループで取得
+    $endMonthDay = date('d', mktime(0, 0, 0, $month + 1, 0, date('Y')));
+    $y = date("w", mktime(0, 0, 0, $month, 1, date("Y")));
     ?>
-        <div class="currentMonth">
-            <p><?php echo $n + 1; ?>月</p>
-            <table>
-                <tr>
+    <div class="currentMonth">
+        <p><?php echo ltrim($month, 0); // 01 
+            ?>月</p>
+        <table>
+            <tr>
+                <?php
+                for ($e = 0; $e < 7; $e++) {
+                    //2022-1-1からの曜日を取得
+                    // $youbi = date('D', mktime(0, 0, 0, $n + 1, $e, date("Y"))); 
+                ?>
+                    <th><?php echo $youbi[$e]; ?></th>
+                <?php }  ?>
+            </tr>
+            <tr>
+                <!-- 空白のセルを曜日番号の数入れる -->
+                <?php for ($m = 0; $m < $y; $m++) { ?>
+                    <td>&nbsp;</td>
+                <?php } ?>
+                <!-- 空白のセル最大6から引いた数のみ日にちを表示して祝日はredにする -->
+                <?php for ($q = 1; $q <= (7 - $y); $q++) {
+                    if ($holidays->isHoliday(new DateTime(date("Y") . "-" . $month . "-" . $q))) :  ?>
+                        <td class="red"><?php echo $q; ?></td>
+                    <?php else : ?>
+                        <td> <?php echo $q; ?></td>
+                    <?php endif; ?>
+                <?php } ?>
+            </tr>
+            <tr>
+                <?php
+                //各月の月間日数分ループで回す
+                for ($i = (7 - $y); $i < $endMonthDay; $i++) {
+                    //曜日を数値で取得する date(m)で２月分のみにする
+                    $w = date("w", mktime(0, 0, 0, $month, $i, date("Y")));
+                    // Yasumiライブラリを使って配列で今年の日本の祝日を取得
+                    $holidays = \Yasumi\Yasumi::create('Japan', date("Y"), 'ja_JP');
+                    //条件分岐で本日のセルのみ色を変える
+                    if ($month == date("m") && $i + 1 == date("d")) : ?>
+                        <td class="today"> <?php echo $i + 1; ?></td>
+                        <!-- isHoliday関数で祝日がどうか判断する -->
                     <?php
-                    for ($e = 0; $e < 7; $e++) {
-                        //2022-1-1からの曜日を取得
-                        // $youbi = date('D', mktime(0, 0, 0, $n + 1, $e, date("Y"))); 
-                    ?>
-                        <th><?php echo $youbi[$e]; ?></th>
-                    <?php }  ?>
-                </tr>
-                <tr>
-                    <!-- 空白のセルを曜日番号の数入れる -->
-                    <?php for ($m = 0; $m < $y; $m++) { ?>
-                        <td>&nbsp;</td>
-                    <?php } ?>
-                    <!-- 空白のセル最大6から引いた数のみ日にちを表示して祝日はredにする -->
-                    <?php for ($q = 1; $q <= (7 - $y); $q++) {
-                        if ($holidays->isHoliday(new DateTime(date("Y") . "-" . ($n + 1) . "-" . $q))) :  ?>
-                            <td class="red"><?php echo $q; ?></td>
-                        <?php else : ?>
-                            <td> <?php echo $q; ?></td>
-                        <?php endif; ?>
-                    <?php } ?>
-                </tr>
-                <tr>
-                    <?php
-                    //各月の月間日数分ループで回す
-                    for ($i = (7 - $y); $i < $endMonthDay; $i++) {
-                        //曜日を数値で取得する
-                        $w = date("w", mktime(0, 0, 0, $n + 1, $i, date("Y")));
+                    elseif ($holidays->isHoliday(new DateTime(date("Y") . "-" . $month . "-" . ($i + 1)))) : ?>
+                        <td class="red"> <?php echo $i + 1; ?></td>
+                    <?php else : ?>
+                        <td> <?php echo $i + 1; ?></td>
+                    <?php endif; ?>
 
+                    <!-- カレンダーっぽくするために1周間ごとに改行を入れる -->
+                    <?php if ($w == 5) { ?>
+                    <?php echo "</tr>";
+                    } ?>
+                <?php   } ?>
+            </tr>
+        </table>
+    </div>
 
-                        // Yasumiライブラリを使って配列で今年の日本の祝日を取得
-                        $holidays = \Yasumi\Yasumi::create('Japan', date("Y"), 'ja_JP');
-
-
-                        //条件分岐で本日のセルのみ色を変える
-                        if ($n + 1 == date("m") && $i + 1 == date("d")) : ?>
-                            <td class="today"> <?php echo $i + 1; ?></td>
-                            <!-- isHoliday関数で祝日がどうか判断する -->
-                        <?php
-                        elseif ($holidays->isHoliday(new DateTime(date("Y") . "-" . ($n + 1) . "-" . ($i + 1)))) : ?>
-                            <td class="red"> <?php echo $i + 1; ?></td>
-                        <?php else : ?>
-                            <td> <?php echo $i + 1; ?></td>
-                        <?php endif; ?>
-
-                        <!-- カレンダーっぽくするために1周間ごとに改行を入れる -->
-                        <?php if ($w == 5) { ?>
-                        <?php echo "</tr>";
-                        } ?>
-
-                    <?php   } ?>
-                </tr>
-            </table>
-        </div>
-    <?php } ?>
+    <div class="arrow">
+        <a href="date.php?page=<?php echo $month - 1; ?>">&lt;&lt;戻る</a>
+        <a href="date.php?page=<?php echo $month + 1; ?>">次へ&gt;&gt;</a>
+    </div>
 </body>
 
 </html>

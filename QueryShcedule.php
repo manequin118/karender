@@ -20,8 +20,8 @@ class QueryShcedule extends connect
       $title = $this->shcedule->getTitle();
       $body = $this->shcedule->getBody();
       $study_day = $this->shcedule->getStudyDay();
-      $stmt = $this->dbh->prepare("INSERT INTO shcedule (title,body,created_at,updated_at,study_day)
-      VALUES (:title,:body,NOW(),NOW(),:study_day) ");
+      $stmt = $this->dbh->prepare("INSERT INTO shcedule (title,body,study_day,created_at,updated_at)
+      VALUES (:title,:body,:study_day,NOW(),NOW()) ");
       $stmt->bindParam(":title", $title, PDO::PARAM_STR);
       $stmt->bindParam(":body", $body, PDO::PARAM_STR);
       $stmt->bindParam(":study_day", $study_day, PDO::PARAM_INT);
@@ -46,5 +46,25 @@ class QueryShcedule extends connect
       $shcedule->setUpdatedAt($result['updated_at']);
     }
     return $shcedule;
+  }
+
+  public function findAll()
+  {
+    $stmt = $this->dbh->prepare("SELECT * FROM shcedule");
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $shcedules = array();
+    foreach ($results as $result) {
+      $shcedule = new Shcedule();
+      $shcedule->setId($result['id']);
+      $shcedule->setTitle($result['title']);
+      $shcedule->setBody($result['body']);
+      $shcedule->setStudyDay($result['study_day']);
+      $shcedule->setCreatedAt($result['created_at']);
+      $shcedule->setUpdatedAt($result['updated_at']);
+      $shcedules[] = $shcedule;
+    }
+    return $shcedules;
   }
 }
