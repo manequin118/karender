@@ -60,10 +60,47 @@ table {
 
 form {
   width: 800px;
-  margin: 0 auto;
+  margin: 100px auto;
   padding: 50px;
   border: 1px solid lightgrey;
   background-color: lightgrey;
+  display: block;
+  position: relative;
+}
+
+form::after {
+  content: "";
+  display: block;
+  width: 4%; /*バツ線の長さ*/
+  height: 6px; /*バツ線の太さ*/
+  background: #000;
+  transform: rotate(45deg);
+  transform-origin: 0% 50%;
+  position: absolute;
+  top: calc(7% - 5px);
+  left: 4%;
+  cursor: pointer;
+}
+
+form::before {
+  content: "";
+  display: block;
+  width: 4%; /*バツ線の長さ*/
+  height: 6px; /*バツ線の太さ*/
+  background: #000;
+  transform: rotate(45deg);
+  transform-origin: 0% 50%;
+  position: absolute;
+  top: calc(7% - 5px);
+  left: 94%;
+  cursor: pointer;
+}
+
+form::after {
+  transform: rotate(-45deg);
+  transform-origin: 100% 50%;
+  left: auto;
+  right: 3%;
 }
 
 button {
@@ -83,4 +120,42 @@ button {
 .shcedule-container {
   width: 1000px;
   margin: 0 auto;
+}
+
+.Gw6Zhc {
+  position: fixed;
+  top: 90%;
+  right: 15%;
+  background-color: #fff;
+  box-shadow: 0 4px #bbbbbb;
+  border-radius: 50%;
+  border: 1px solid #eee;
+  cursor: pointer;
+}
+
+/*modal*/
+.modal-container {
+  /* margin: 100px auto; */
+  display: none;
+  background-color: #333;
+  opacity: 0.9;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  position: fixed;
+  top: 0;
+}
+
+.modal-contents input {
+  display: block;
+  width: 50%;
+  margin-bottom: 20px;
+  height: 35px;
+  border-color: black;
+}
+
+.modal-contents {
+  display: block;
+  position: relative;
 }

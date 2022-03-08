@@ -5,6 +5,13 @@ include 'shcedule.php';
 
 $queryShcedule = new QueryShcedule();
 $shcedules = $queryShcedule->findAll();
+if (!empty($_GET['id'])) {
+  $queryShcedule = new QueryShcedule();
+  $shcedule = $queryShcedule->find($_GET['id']);
+  if ($shcedule) {
+    $shcedule->delete();
+  }
+}
 
 
 ?>
@@ -39,7 +46,9 @@ $shcedules = $queryShcedule->findAll();
               <td><?php echo $shcedule->getTitle() ?></td>
               <td><?php echo $shcedule->getBody() ?></td>
               <td><?php echo $shcedule->getStudyDay() ?></td>
-              <td><a href="edit.php?id=<?php echo $shcedule->getId() ?>" class="btn btn-success">編集</a></td>
+              <td><a href="edit.php?id=<?php echo $shcedule->getId() ?>" class="">編集</a>
+
+              </td>
             </tr>
           <?php endforeach; ?>
         </tbody>
