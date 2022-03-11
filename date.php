@@ -2,43 +2,38 @@
 
 use Yasumi\Yasumi;
 
+// include 'queryShcedule.php';
 //曜日を配列に代入
 $youbi = array(0 => "日", 1 => "月", 2 => "火", 3 => "水", 4 => "木", 5 => "金", 6 => "土");
 // print_r($youbi);
 
 require 'vendor/autoload.php';
-$date = new DateTime();
-$year = $date->format("Y");
-// $year = date("Y");
+// $date = new DateTime();
+// $year = $date->format("Y");
+$year = date("Y");
 $holidays = \Yasumi\Yasumi::create('Japan', $year, 'ja_JP');
-$month = $date->format(("m"));
-if (isset($_GET['page'])) {
 
-    // 次へを押し続けた場合
-    if ($_GET["page"] < 13) {
-        $month = $_GET["page"];
-    } elseif ($_GET["page"] % 13  == 0) {
-        $_GET["page"] = 1;
-        $month = $_GET["page"];
-        $year = $date->modify("+1 year")->format("Y");
-    }
-    // 戻るを押し続けた場合
-    if ($_GET["page"] == 0) {
-        $month = 12;
-        $year = $date->modify("-1 year")->format("Y");
-    } elseif ($_GET["page"] < 0) {
-        $month = 12 + $_GET["page"];
-        $year = $date->modify("-1 year")->format("Y");
-    }
+// // $month = $date->format(("m"));
+$year = isset($_GET['year']) ? (int)$_GET['year'] : date("Y");
+$month = isset($_GET['month']) ? (int)$_GET['month'] : date("n");
+if ($month === 13) {
+    $year++;
+    $month = 1;
 }
-// var_dump($year);
-// var_dump($_GET["page"]);
+//2021/0と来たら2020/12と変換
+if ($month === 0) {
+    $year--;
+    $month = 12;
+}
+
+// $queryShcedule = new QueryShcedule();
+// $shcedules = $queryShcedule->findAll();
 
 
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
     <meta charset="UTF-8">
@@ -62,6 +57,7 @@ if (isset($_GET['page'])) {
                 <label for="">日程</label>
                 <input type="date" name="study_day">
                 <button type="submit">送信する</button>
+                <div class="batu" id="modalClose"></div>
             </form>
         </div>
     </div>
@@ -91,8 +87,9 @@ if (isset($_GET['page'])) {
                     <td>&nbsp;</td>
                 <?php } ?>
                 <!-- 空白のセル最大6から引いた数のみ日にちを表示して祝日はredにする -->
-                <?php for ($q = 1; $q <= (7 - $y); $q++) { ?>
-                    <?php if ($month == date("m") && $q == date("d")) : ?>
+                <?php for ($q = 1; $q <= (7 - $y); $q++) {
+                    $holidays = \Yasumi\Yasumi::create('Japan', $year, 'ja_JP'); ?>
+                    <?php if ($year == date("Y") && $month == date("m") && $q == date("d")) : ?>
                         <td class="today"> <?php echo $q; ?></td>
                     <?php elseif ($holidays->isHoliday(new DateTime($year . "-" . $month . "-" . $q))) :  ?>
                         <td class="red"><?php echo $q; ?></td>
@@ -105,12 +102,11 @@ if (isset($_GET['page'])) {
                 <?php
                 //各月の月間日数分ループで回す
                 for ($i = (7 - $y); $i < $endMonthDay; $i++) {
-                    //曜日を数値で取得する date(m)で２月分のみにする
                     $w = date("w", mktime(0, 0, 0, $month, $i, $year));
                     // Yasumiライブラリを使って配列で今年の日本の祝日を取得
                     $holidays = \Yasumi\Yasumi::create('Japan', $year, 'ja_JP');
                     //条件分岐で本日のセルのみ色を変える
-                    if ($month == date("m") && $i + 1 == date("d")) : ?>
+                    if ($year == date("Y") && $month == date("m") && $i + 1 == date("d")) : ?>
                         <td class="today"> <?php echo $i + 1; ?></td>
                         <!-- isHoliday関数で祝日がどうか判断する -->
                     <?php
@@ -129,7 +125,7 @@ if (isset($_GET['page'])) {
         </table>
     </div>
     <!-- 予定を登録するモーダル表示のアイコン -->
-    <div class="Gw6Zhc" id="modalOpen"><svg width="55" height="48" viewBox="0 0 36 36">
+    <div class="Gw6Zhc" id="modalOpen"><svg width="100" height="100s" viewBox="0 0 36 36">
             <path fill="#34A853" d="M16 16v14h4V20z"></path>
             <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
             <path fill="#FBBC05" d="M6 16v4h10l4-4z"></path>
@@ -138,8 +134,8 @@ if (isset($_GET['page'])) {
         </svg></div>
 
     <div class="arrow">
-        <a href="date.php?page=<?php echo $month - 1; ?>">&lt;&lt;戻る</a>
-        <a href="date.php?page=<?php echo  $month + 1; ?>">次へ&gt;&gt;</a>
+        <a href="date.php?month=<?php echo $month - 1; ?>&year=<?php echo $year; ?>">&lt;&lt;戻る</a>
+        <a href="date.php?month=<?php echo  $month + 1; ?>&year=<?php echo $year; ?>">次へ&gt;&gt;</a>
     </div>
     <script src="modal.js"></script>
 </body>

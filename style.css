@@ -2,7 +2,11 @@
   width: auto;
   display: flex;
   justify-content: space-around;
-  margin-top: 100px;
+  margin-top: 50px;
+}
+
+.arrow a {
+  font-size: 23px;
 }
 
 .currentMonth {
@@ -68,7 +72,7 @@ form {
   position: relative;
 }
 
-form::after {
+.batu::after {
   content: "";
   display: block;
   width: 4%; /*バツ線の長さ*/
@@ -82,7 +86,7 @@ form::after {
   cursor: pointer;
 }
 
-form::before {
+.batu::before {
   content: "";
   display: block;
   width: 4%; /*バツ線の長さ*/
@@ -96,7 +100,7 @@ form::before {
   cursor: pointer;
 }
 
-form::after {
+.batu::after {
   transform: rotate(-45deg);
   transform-origin: 100% 50%;
   left: auto;
@@ -124,7 +128,7 @@ button {
 
 .Gw6Zhc {
   position: fixed;
-  top: 90%;
+  top: 80%;
   right: 15%;
   background-color: #fff;
   box-shadow: 0 4px #bbbbbb;

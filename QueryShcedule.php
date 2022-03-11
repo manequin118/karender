@@ -32,7 +32,7 @@ class QueryShcedule extends connect
       $body = $this->shcedule->getBody();
       $study_day = $this->shcedule->getStudyDay();
       $stmt = $this->dbh->prepare("INSERT INTO shcedule (title,body,study_day,created_at,updated_at)
-      VALUES (:title,:body,:study_day,NOW(),NOW())");
+        VALUES (:title,:body,:study_day,NOW(),NOW())");
       $stmt->bindParam(":title", $title, PDO::PARAM_STR);
       $stmt->bindParam(":body", $body, PDO::PARAM_STR);
       $stmt->bindParam(":study_day", $study_day, PDO::PARAM_INT);
