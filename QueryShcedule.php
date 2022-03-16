@@ -1,4 +1,7 @@
 <?php
+
+use Yasumi\Yasumi;
+
 class QueryShcedule extends connect
 {
   private $shcedule;
@@ -88,4 +91,11 @@ class QueryShcedule extends connect
     }
     return $shcedules;
   }
+
+  // public function carenderScheduleRegister()
+  // {
+  //   $stmt = $this->dbh->prepare("SELECT * FROM shcedule WHERE is_delete=0 ");
+  //   $stmt->execute();
+  //   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  // }
 }

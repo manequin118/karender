@@ -5,6 +5,10 @@
   margin-top: 50px;
 }
 
+p {
+  margin: 0;
+}
+
 .arrow a {
   font-size: 23px;
 }
@@ -32,6 +36,7 @@ table td {
   height: 100px;
   text-align: left;
   vertical-align: baseline;
+  width: 100px;
 }
 
 table {

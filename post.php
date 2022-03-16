@@ -1,4 +1,5 @@
 <?php
+
 include 'connect.php';
 include "shcedule.php";
 include "queryShcedule.php";
@@ -13,23 +14,23 @@ $body_alert = "";   // 本文のエラー文言
 
 if (!empty($_POST['title']) && !empty($_POST['body']) && !empty($_POST['study_day'])) {
   // id, titleとbodyがPOSTメソッドで送信されたとき
-  // $title = $_POST["title"];
-  // $body = $_POST["body"];
-  // $study_day = $_POST["study_day"];
+  $title = $_POST["title"];
+  $body = $_POST["body"];
+  $study_day = $_POST["study_day"];
 
-  // $db = new connect();
-  // $sql = "INSERT INTO shcedule (title, body,study_day, created_at, updated_at)
-  //           VALUES (:title, :body,:study_day, NOW(), NOW())";
-  // $result = $db->query($sql, array(':title' => $title, ':body' => $body, ":study_day" => $study_day));
+  $db = new connect();
+  $sql = "INSERT INTO shcedule (title, body,study_day, created_at, updated_at)
+            VALUES (:title, :body,:study_day, NOW(), NOW())";
+  $result = $db->query($sql, array(':title' => $title, ':body' => $body, ":study_day" => $study_day));
 
-  // header('Location: index.php');
-
-  $shcedule = new Shcedule();
-  $shcedule->setTitle($title);
-  $shcedule->setBody($body);
-  $shcedule->setStudyDay($study_day);
-  $shcedule->save();
   header('Location: index.php');
+
+  // $shcedule = new Shcedule();
+  // $shcedule->setTitle($title);
+  // $shcedule->setBody($body);
+  // $shcedule->setStudyDay($study_day);
+  // $shcedule->save();
+  // header('Location: index.php');
 } else if (!empty($_POST)) {
   // POSTメソッドで送信されたが、titleかbodyが足りないとき
   // 存在するほうは変数へ、ない場合空文字にしてフォームのvalueに設定する

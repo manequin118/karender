@@ -2,7 +2,9 @@
 
 use Yasumi\Yasumi;
 
-// include 'queryShcedule.php';
+include 'connect.php';
+include 'queryShcedule.php';
+include 'shcedule.php';
 //曜日を配列に代入
 $youbi = array(0 => "日", 1 => "月", 2 => "火", 3 => "水", 4 => "木", 5 => "金", 6 => "土");
 // print_r($youbi);
@@ -26,8 +28,23 @@ if ($month === 0) {
     $month = 12;
 }
 
-// $queryShcedule = new QueryShcedule();
-// $shcedules = $queryShcedule->findAll();
+$queryShcedule = new QueryShcedule();
+$shcedules = $queryShcedule->findAll();
+$results = array();
+foreach ($shcedules as $shcedule) {
+
+    $results[$shcedule->getStudyDay()][] =  $shcedule->getTitle();
+}
+
+// print_r($results);
+
+foreach ($results as $result => $values) {
+    var_dump($values);
+    foreach ($values as $value) {
+
+        // var_dump($value);
+    }
+}
 
 
 
@@ -51,11 +68,11 @@ if ($month === 0) {
         <div class="modal-contents">
             <form action="post.php" method="post">
                 <label for="">タイトル</label>
-                <input type="text" name="title" value="<?php echo $title; ?>">
+                <input type="text" name="title" id="title" value="<?php echo $title; ?>">
                 <label for="">内容</label>
-                <input type="text" name="body" value="<?php echo $body; ?>">
+                <input type="text" name="body" id="body" value="<?php echo $body; ?>">
                 <label for="">日程</label>
-                <input type="date" name="study_day">
+                <input type="date" name="study_day" id="study_day">
                 <button type="submit">送信する</button>
                 <div class="batu" id="modalClose"></div>
             </form>
@@ -69,8 +86,7 @@ if ($month === 0) {
     $y = date("w", mktime(0, 0, 0, $month, 1, $year));
     ?>
     <div class="currentMonth">
-        <p><?php echo ltrim($month, 0); // 01 
-            ?>月</p>
+        <p><?php echo ltrim($month, 0);  ?>月</p>
         <table>
             <tr>
                 <?php
@@ -88,13 +104,24 @@ if ($month === 0) {
                 <?php } ?>
                 <!-- 空白のセル最大6から引いた数のみ日にちを表示して祝日はredにする -->
                 <?php for ($q = 1; $q <= (7 - $y); $q++) {
-                    $holidays = \Yasumi\Yasumi::create('Japan', $year, 'ja_JP'); ?>
+                    $holidays = \Yasumi\Yasumi::create('Japan', $year, 'ja_JP');
+                    $date1 = $year . "-" . "0" . $month . "-" . str_pad($q, "2", "0", STR_PAD_LEFT);
+
+                ?>
                     <?php if ($year == date("Y") && $month == date("m") && $q == date("d")) : ?>
                         <td class="today"> <?php echo $q; ?></td>
                     <?php elseif ($holidays->isHoliday(new DateTime($year . "-" . $month . "-" . $q))) :  ?>
                         <td class="red"><?php echo $q; ?></td>
                     <?php else : ?>
-                        <td> <?php echo $q; ?></td>
+                        <td> <?php echo $q; ?>
+                            <?php foreach ($results as $result => $r) {
+                                if ($result == $date1) {
+                                    foreach ($r as $value) {
+                                        echo '<p><input type="checkbox" >' . $value . "</p>";
+                                    }
+                                }
+                            } ?>
+                        </td>
                     <?php endif; ?>
                 <?php } ?>
             </tr>
@@ -105,17 +132,34 @@ if ($month === 0) {
                     $w = date("w", mktime(0, 0, 0, $month, $i, $year));
                     // Yasumiライブラリを使って配列で今年の日本の祝日を取得
                     $holidays = \Yasumi\Yasumi::create('Japan', $year, 'ja_JP');
+                    $date2 = $year . "-" . "0" . $month . "-" . str_pad(($i + 1), "2", "0", STR_PAD_LEFT);
+
                     //条件分岐で本日のセルのみ色を変える
                     if ($year == date("Y") && $month == date("m") && $i + 1 == date("d")) : ?>
                         <td class="today"> <?php echo $i + 1; ?></td>
                         <!-- isHoliday関数で祝日がどうか判断する -->
                     <?php
                     elseif ($holidays->isHoliday(new DateTime($year . "-" . $month . "-" . ($i + 1)))) : ?>
-                        <td class="red"> <?php echo $i + 1; ?></td>
-                    <?php else : ?>
-                        <td> <?php echo $i + 1; ?></td>
-                    <?php endif; ?>
+                        <td class="red"> <?php echo $i + 1; ?>
+                            <?php foreach ($results as $result => $r) {
+                                if ($result == $date2) {
+                                    foreach ($r as $value) {
+                                        echo '<p><input type="checkbox" >' . $value . "</p>";
+                                    }
+                                }
+                            } ?>
+                        </td>
 
+                    <?php else : ?>
+                        <td> <?php echo $i + 1; ?>
+                            <?php foreach ($results as $result => $r) {
+                                if ($result == $date2) {
+                                    foreach ($r as $value) {
+                                        echo '<p><input type="checkbox" >' . $value . "</p> ";
+                                    }
+                                }
+                            } ?></td>
+                    <?php endif; ?>
                     <!-- カレンダーっぽくするために1周間ごとに改行を入れる -->
                     <?php if ($w == 5) { ?>
                     <?php echo "</tr>";
