@@ -145,7 +145,7 @@ foreach ($results as $result => $values) {
                     <?php foreach ($results as $result => $r) {
                                 if ($result == $date2) {
                                     foreach ($r as $value) {
-                                        echo '<p><input  type="checkbox" >' . $value . "</p>";
+                                        echo '<p><input class="checked" type="checkbox" >' . $value . "</p>";
                                     }
                                 }
                             } ?>
@@ -156,7 +156,7 @@ foreach ($results as $result => $values) {
                     <?php foreach ($results as $result => $r) {
                                 if ($result == $date2) {
                                     foreach ($r as $value) {
-                                        echo '<p><input  type="checkbox" >' . $value . "</p> ";
+                                        echo '<p><input class="checked" type="checkbox" >' . $value . "</p> ";
                                     }
                                 }
                             } ?></td>
@@ -183,7 +183,6 @@ foreach ($results as $result => $values) {
         <a href="date.php?month=<?php echo  $month + 1; ?>&year=<?php echo $year; ?>">次へ&gt;&gt;</a>
     </div>
     <script src="modal.js"></script>
-    <script src="check.js"></script>
 </body>
 
 </html>

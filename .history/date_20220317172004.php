@@ -183,7 +183,6 @@ foreach ($results as $result => $values) {
         <a href="date.php?month=<?php echo  $month + 1; ?>&year=<?php echo $year; ?>">次へ&gt;&gt;</a>
     </div>
     <script src="modal.js"></script>
-    <script src="check.js"></script>
 </body>
 
 </html>
