@@ -6,7 +6,7 @@ include 'shcedule.php';
 $queryShcedule = new QueryShcedule();
 $shcedules = $queryShcedule->findAll();
 
-
+// var_dump($shcedules);
 
 ?>
 <!DOCTYPE html>

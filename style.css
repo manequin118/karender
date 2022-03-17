@@ -2,15 +2,21 @@
   width: auto;
   display: flex;
   justify-content: space-around;
-  margin-top: 50px;
+  align-items: center;
 }
 
 p {
   margin: 0;
 }
 
+a {
+  text-decoration: none;
+}
+
 .arrow a {
   font-size: 23px;
+  text-decoration: none;
+  color: #000;
 }
 
 .currentMonth {
