@@ -1,4 +1,7 @@
 <?php
+
+use Yasumi\Yasumi;
+
 class QueryShcedule extends connect
 {
   private $shcedule;
@@ -16,12 +19,23 @@ class QueryShcedule extends connect
   public function save()
   {
     if ($this->shcedule->getId()) {
+      $id = $this->shcedule->getId();
+      $title = $this->shcedule->getTitle();
+      $body = $this->shcedule->getBody();
+      $study_day = $this->shcedule->getStudyDay();
+      $stmt = $this->dbh->prepare("UPDATE shcedule
+                SET title=:title, body=:body,study_day=:study_day, updated_at=NOW() WHERE id=:id");
+      $stmt->bindParam(':title', $title, PDO::PARAM_STR);
+      $stmt->bindParam(':body', $body, PDO::PARAM_STR);
+      $stmt->bindParam(':study_day', $study_day, PDO::PARAM_STR);
+      $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+      $stmt->execute();
     } else {
       $title = $this->shcedule->getTitle();
       $body = $this->shcedule->getBody();
       $study_day = $this->shcedule->getStudyDay();
       $stmt = $this->dbh->prepare("INSERT INTO shcedule (title,body,study_day,created_at,updated_at)
-      VALUES (:title,:body,:study_day,NOW(),NOW()) ");
+        VALUES (:title,:body,:study_day,NOW(),NOW())");
       $stmt->bindParam(":title", $title, PDO::PARAM_STR);
       $stmt->bindParam(":body", $body, PDO::PARAM_STR);
       $stmt->bindParam(":study_day", $study_day, PDO::PARAM_INT);
@@ -29,9 +43,19 @@ class QueryShcedule extends connect
     }
   }
 
+  public function delete()
+  {
+    if ($this->shcedule->getId()) {
+      $id = $this->shcedule->getId();
+      $stmt = $this->dbh->prepare("UPDATE shcedule SET is_delete=1 WHERE id=:id");
+      $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+      $stmt->execute();
+    }
+  }
+
   public function find($id)
   {
-    $stmt = $this->dbh->prepare("SELECT * FROM shcedule WHERE id=:id");
+    $stmt = $this->dbh->prepare("SELECT * FROM shcedule WHERE id=:id AND is_delete=0");
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -50,7 +74,7 @@ class QueryShcedule extends connect
 
   public function findAll()
   {
-    $stmt = $this->dbh->prepare("SELECT * FROM shcedule");
+    $stmt = $this->dbh->prepare("SELECT * FROM shcedule WHERE is_delete=0 ORDER BY created_at DESC");
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -67,4 +91,11 @@ class QueryShcedule extends connect
     }
     return $shcedules;
   }
+
+  // public function carenderScheduleRegister()
+  // {
+  //   $stmt = $this->dbh->prepare("SELECT * FROM shcedule WHERE is_delete=0 ");
+  //   $stmt->execute();
+  //   $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  // }
 }

@@ -99,6 +99,7 @@ if (isset($_GET['id'])) {
       </form>
     </div>
     <a href="date.php">カレンダーへ</a>
+    <a href="delete.php?id=<?php echo $shcedule->getId() ?>" class="">削除</a>
   </div>
 
 </body>

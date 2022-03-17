@@ -15,6 +15,13 @@ class Shcedule
     $queryShcedule->save();
   }
 
+  public function delete()
+  {
+    $queryShcedule = new QueryShcedule();
+    $queryShcedule->setShcedule($this);
+    $queryShcedule->delete();
+  }
+
   public function getId()
   {
     return $this->id;
