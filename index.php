@@ -1,5 +1,6 @@
 <?php
 include 'connect.php';
+include "secure.php";
 include 'queryShcedule.php';
 include 'shcedule.php';
 
@@ -21,6 +22,7 @@ $shcedules = $queryShcedule->findAll();
 </head>
 
 <body>
+  <?php include "header.php"; ?>
   <div class="shcedule-container">
     <?php if ($shcedules) : ?>
       <table class="table ">
@@ -60,6 +62,7 @@ $shcedules = $queryShcedule->findAll();
           <path fill="none" d="M0 0h36v36H0z"></path>
         </svg></a></div>
   </div>
+  <script src="check.js"></script>
 </body>
 
 </html>

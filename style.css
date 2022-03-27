@@ -1,8 +1,13 @@
+@charset "utf-8";
 .arrow {
   width: auto;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+}
+.arrow h1 {
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 p {
@@ -59,6 +64,10 @@ table {
   background-color: #ffa8a8;
 }
 
+.shcedule-end {
+  text-decoration: line-through;
+}
+
 /*post.php*/
 .post-container {
   width: 1000px;
@@ -73,7 +82,7 @@ table {
   border-color: black;
 }
 
-form {
+.post-contents form {
   width: 800px;
   margin: 100px auto;
   padding: 50px;
@@ -134,7 +143,7 @@ button {
 
 .shcedule-container {
   width: 1000px;
-  margin: 0 auto;
+  margin: 50px auto;
 }
 
 .Gw6Zhc {
@@ -173,4 +182,130 @@ button {
 .modal-contents {
   display: block;
   position: relative;
+}
+
+.show-container {
+  width: 1000px;
+  margin: 100px auto;
+}
+
+.title_header {
+  background-color: rgb(209, 235, 95);
+  height: auto;
+  padding: 20px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.title_header h2 {
+  margin: 10px 0;
+}
+
+.contents-body {
+  background-color: rgb(20, 208, 214);
+  height: auto;
+  padding: 20px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.date {
+  background-color: #bbbbbb;
+  margin-bottom: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+.under-body {
+  text-align: right;
+}
+
+.show-container input {
+  width: 100%;
+  height: 40px;
+  border: 1px solid #ddd;
+}
+
+.form-signin {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.form-signin form {
+  text-align: center;
+}
+
+.form-signin label {
+  display: block;
+  width: 400px;
+  text-align: left;
+  margin: 50px auto 0;
+}
+.form-signin button {
+  display: block;
+  margin: 100px auto;
+  height: 50px;
+  width: 300px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.form-signin button:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+.form-signin input {
+  height: 35px;
+  width: 400px;
+  border: 1px solid #ddd;
+}
+
+/*ヘッダー*/
+.header-container ul {
+  margin: 0;
+  font-size: 20px;
+  display: flex;
+  list-style: none;
+  justify-content: space-evenly;
+  padding: 0%;
+}
+.header-container {
+  width: 100%;
+  height: 80px;
+  background-color: #2c7cff;
+}
+
+.header-container a {
+  color: #fff;
+  cursor: pointer;
+}
+
+.header-list {
+  width: 50%;
+  margin-left: 50%;
+  line-height: 4;
+}
+
+.header-list .list {
+  background: #2c7cff;
+  opacity: 0.8;
+  width: 100%;
+  overflow: hidden;
+  min-height: 0;
+  transition: min-height 0.3s;
+  height: 0;
+  margin: 0 20px;
+  text-align: center;
+}
+
+.active {
+  min-height: 80px !important;
+}
+
+.header-list li {
+  text-align: center;
 }

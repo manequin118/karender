@@ -59,6 +59,7 @@ if (!empty($_POST['title']) && !empty($_POST['body']) && !empty($_POST['study_da
 </head>
 
 <body>
+  <?php include "header.php"; ?>
   <div class="post-container">
     <div class="post-contents">
       <form action="post.php" method="post">

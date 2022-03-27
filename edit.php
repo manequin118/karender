@@ -83,6 +83,7 @@ if (isset($_GET['id'])) {
 </head>
 
 <body>
+  <?php include "header.php"; ?>
   <div class="post-container">
     <div class="post-contents">
       <form action="edit.php" method="post">

@@ -1,6 +1,6 @@
 <?php
 
-use Yasumi\Yasumi;
+// include "secure.php";
 
 include 'connect.php';
 include 'queryShcedule.php';
@@ -66,7 +66,7 @@ foreach ($results as $result => $values) {
 
 <body>
 
-
+    <?php include "header.php"; ?>
     <?php
     // for ($n = 0; $n < 12; $n++) {
     //1月からの月間の日数をループで取得
@@ -113,7 +113,7 @@ foreach ($results as $result => $values) {
 
                                     if ($key == $date1) {
 
-                                        echo '<p><input  type="checkbox" ><a href="show.php?id=' . $result . '">' . $value . "</a></p> ";
+                                        echo '<p><input  type="checkbox" name="input" ><a href="show.php?id=' . $result . '">' . $value . "</a></p> ";
                                     }
                                 }
                             } ?>
@@ -162,7 +162,7 @@ foreach ($results as $result => $values) {
 
                                     if ($key == $date2) {
                                         var_dump($result);
-                                        echo '<p><input  type="checkbox" ><a href="show.php?id=' . $result . '">' . $value . "</a></p> ";
+                                        echo '<p><input  type="checkbox" name="input"><a href="show.php?id=' . $result . '">' . $value . "</a></p> ";
                                     }
                                 }
                             } ?></td>
@@ -176,13 +176,13 @@ foreach ($results as $result => $values) {
         </table>
     </div>
     <!-- 予定を登録するモーダル表示のアイコン -->
-    <div class="Gw6Zhc"><a href="post.php"><svg width="100" height="100s" viewBox="0 0 36 36">
+    <!-- <div class="Gw6Zhc"><a href="post.php"><svg width="100" height="100s" viewBox="0 0 36 36">
                 <path fill="#34A853" d="M16 16v14h4V20z"></path>
                 <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
                 <path fill="#FBBC05" d="M6 16v4h10l4-4z"></path>
                 <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
                 <path fill="none" d="M0 0h36v36H0z"></path>
-            </svg></a></div>
+            </svg></a></div> -->
 
     <script src="modal.js"></script>
     <script src="check.js"></script>
