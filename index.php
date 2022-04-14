@@ -3,11 +3,17 @@ include 'connect.php';
 include "secure.php";
 include 'queryShcedule.php';
 include 'shcedule.php';
+include 'queryUsers.php';
 
 $queryShcedule = new QueryShcedule();
 $shcedules = $queryShcedule->findAll();
-
 // var_dump($shcedules);
+
+$queryUser = new QueryUsers();
+$users = $queryUser->find();
+
+$id = $_SESSION["id"];
+
 
 ?>
 <!DOCTYPE html>
@@ -24,6 +30,7 @@ $shcedules = $queryShcedule->findAll();
 <body>
   <?php include "header.php"; ?>
   <div class="shcedule-container">
+    <h2><?php  ?></h2>
     <?php if ($shcedules) : ?>
       <table class="table ">
         <thead>
@@ -36,17 +43,20 @@ $shcedules = $queryShcedule->findAll();
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($shcedules as $shcedule) : ?>
+          <?php foreach ($shcedules as $shcedule) :
+          ?>
             <tr>
-              <td><?php echo $shcedule->getId() ?></td>
-              <td><?php echo $shcedule->getTitle() ?></td>
-              <td><?php echo $shcedule->getBody() ?></td>
-              <td><?php echo $shcedule->getStudyDay() ?></td>
-              <td><a href="edit.php?id=<?php echo $shcedule->getId() ?>" class="">編集</a>
-
-              </td>
+              <!-- show.phpのデータの取り方を参考にしたほうがいいかも ↓if文がいるのか -->
+              <?php if ($shcedule->getUser_id() == $id) : ?>
+                <td><?php echo $shcedule->getId() ?></td>
+                <td><?php echo $shcedule->getTitle() ?></td>
+                <td><?php echo $shcedule->getBody() ?></td>
+                <td><?php echo $shcedule->getStudyDay() ?></td>
+                <td><a href="edit.php?id=<?php echo $shcedule->getId() ?>" class="">編集</a>
+                </td>
             </tr>
-          <?php endforeach; ?>
+          <?php endif; ?>
+        <?php endforeach; ?>
         </tbody>
       </table>
     <?php else : ?>

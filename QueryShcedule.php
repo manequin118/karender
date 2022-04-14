@@ -1,7 +1,5 @@
 <?php
 
-use Yasumi\Yasumi;
-
 class QueryShcedule extends connect
 {
   private $shcedule;
@@ -74,9 +72,40 @@ class QueryShcedule extends connect
 
   public function findAll()
   {
-    $stmt = $this->dbh->prepare("SELECT * FROM shcedule WHERE is_delete=0 ORDER BY created_at DESC");
+    $stmt = $this->dbh->prepare("SELECT shcedule.id,shcedule.title,shcedule.body,shcedule.study_day,shcedule.user_id,shcedule.is_delete FROM shcedule 
+    INNER JOIN users ON
+    shcedule.user_id = users.id 
+    WHERE is_delete=0 ORDER BY created_at DESC");
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // print_r($results);
+
+    $shcedules = array();
+    foreach ($results as $result) {
+      $shcedule = new Shcedule();
+      $shcedule->setId($result['id']);
+      $shcedule->setTitle($result['title']);
+      $shcedule->setBody($result['body']);
+      $shcedule->setStudyDay($result['study_day']);
+      $shcedule->setUser_id($result['user_id']);
+      $shcedule->setCreatedAt($result['created_at']);
+      $shcedule->setUpdatedAt($result['updated_at']);
+      $shcedules[] = $shcedule;
+    }
+
+    return $shcedules;
+  }
+
+  public function findAllDate($id)
+  {
+    $stmt = $this->dbh->prepare("SELECT shcedule.id,shcedule.title,shcedule.body,shcedule.study_day,shcedule.user_id,shcedule.is_delete FROM shcedule 
+    LEFT JOIN users ON
+    shcedule.user_id = users.id
+    WHERE is_delete=0 AND user_id=:id  ORDER BY created_at DESC");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
     $shcedules = array();
     foreach ($results as $result) {

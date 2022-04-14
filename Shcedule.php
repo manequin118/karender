@@ -5,6 +5,7 @@ class Shcedule
   private $title;
   private $body;
   private $study_day;
+  private $user_id;
   private $created_at;
   private $updated_at;
 
@@ -41,6 +42,10 @@ class Shcedule
   {
     return $this->study_day;
   }
+  public function getUser_id()
+  {
+    return $this->user_id;
+  }
   public function getCreatedAt()
   {
     return $this->created_at;
@@ -65,6 +70,10 @@ class Shcedule
   public function setStudyDay($study_day)
   {
     $this->study_day = $study_day;
+  }
+  public function setUser_id($user_id)
+  {
+    $this->user_id = $user_id;
   }
   public function setCreatedAt($created_at)
   {

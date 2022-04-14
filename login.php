@@ -10,36 +10,39 @@ if (isset($_POST['name']) && isset($_POST['password'])) {
   // $name = $_POST["name"];
   // $password = $_POST["password"];
 
-
-
   // 実行したいSQL
-  $select = "SELECT * FROM users WHERE name=:name";
+  $select = "SELECT * FROM users WHERE name=:name ";
+
   // 第2引数でどのパラメータにどの変数を割り当てるか決める
   $stmt = $db->query($select, array(':name' => $_POST["name"]));
 
 
+
   // レコード1件を連想配列として取得する
-  $result = $stmt->fetch(PDO::FETCH_ASSOC);
+  $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
   // var_dump($result);
   // var_dump($_POST["password"]);
   // var_dump(password_hash($_POST["password"], PASSWORD_DEFAULT));
   // var_dump(password_verify($_POST["password"], password_hash($_POST["password"], PASSWORD_DEFAULT)));
   // exit;
 
-  if ($result && password_verify($_POST["password"], $result['password'])) {
-    // 結果が存在し、パスワードも正しい場合
-    session_start();
-    session_regenerate_id(true);
-    $_SESSION['id'] = $result['id'];
 
-    header('Location: index.php');
-  } else {
-    $err = "ログインできませんでした。";
+  foreach ($results as $result) {
+    if ($result && password_verify($_POST["password"], $result['password'])) {
+      // 結果が存在し、パスワードも正しい場合
+      session_start();
+      session_regenerate_id(true);
+      $_SESSION['id'] = $result['id'];
+
+      header('Location: index.php');
+    } else {
+      $err = "ログインできませんでした。";
+    }
   }
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
   <meta charset="UTF-8">
@@ -68,7 +71,7 @@ if (isset($_POST['name']) && isset($_POST['password'])) {
       <button class="w-100 btn btn-lg btn-primary" type="submit">ログイン</button>
 
     </form>
-
+    <script src="check.js"></script>
 </body>
 
 </html>

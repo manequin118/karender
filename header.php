@@ -8,6 +8,7 @@
         <li id="login"><a href="./login.php">ログイン</a>
           <ul class="list">
             <li><a href="./logout.php">ログアウト</a></li>
+            <li><a href="./signUp.php">新規ユーザー登録</a></li>
           </ul>
         </li>
       </ul>

@@ -1,5 +1,5 @@
 <?php
-
+include "secure.php";
 include 'connect.php';
 include "shcedule.php";
 include "queryShcedule.php";
@@ -17,11 +17,14 @@ if (!empty($_POST['title']) && !empty($_POST['body']) && !empty($_POST['study_da
   $title = $_POST["title"];
   $body = $_POST["body"];
   $study_day = $_POST["study_day"];
+  $user_id = $_SESSION["id"];
 
   $db = new connect();
-  $sql = "INSERT INTO shcedule (title, body,study_day, created_at, updated_at)
-            VALUES (:title, :body,:study_day, NOW(), NOW())";
-  $result = $db->query($sql, array(':title' => $title, ':body' => $body, ":study_day" => $study_day));
+  $sql = "INSERT INTO shcedule (title,body,study_day,user_id,created_at, updated_at)
+  VALUES (:title,:body,:study_day,:user_id, NOW(), NOW())";
+  $result = $db->query($sql, array(':title' => $title, ':body' => $body, ":study_day" => $study_day, ":user_id" => $user_id));
+  // var_dump($result);
+  // exit;
 
   header('Location: index.php');
 
@@ -77,7 +80,7 @@ if (!empty($_POST['title']) && !empty($_POST['body']) && !empty($_POST['study_da
     <a href="date.php">カレンダーへ</a>
     <a href="index.php">一覧へ</a>
   </div>
-
+  <script src="check.js"></script>
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 <?php
 
-// include "secure.php";
+include "secure.php";
 
 include 'connect.php';
 include 'queryShcedule.php';
@@ -28,25 +28,34 @@ if ($month === 0) {
 }
 
 $queryShcedule = new QueryShcedule();
-$shcedules = $queryShcedule->findAll();
-$results = array();
-$id = array();
-foreach ($shcedules as $shcedule) {
+$shcedules = $queryShcedule->findAllDate($_SESSION["id"]);
+// print_r($shcedules);
 
+
+foreach ($shcedules as $shcedule) {
     $results[$shcedule->getId()] = array($shcedule->getStudyDay() => $shcedule->getTitle());
 }
 // print_r($id);
 // var_dump($results);
 // print_r($results);
 
-foreach ($results as $result => $values) {
-    // var_dump($values);
-    foreach ($values as $id => $value) {
-        // var_dump($value);
-
+foreach ($results as $result => $r) {
+    foreach ($r as $v => $s) {
+        // var_dump($v);
     }
 }
 
+
+function shceduleDisplay($results, $date)
+{
+    foreach ($results as $result => $r) {
+        foreach ($r as $v => $val) {
+            if ($v == $date) {
+                echo '<p><input  type="checkbox" name="input" ><a href="show.php?id=' . $result . '">' . $val . "</a></p> ";
+            }
+        }
+    }
+}
 
 
 ?>
@@ -65,7 +74,6 @@ foreach ($results as $result => $values) {
 </head>
 
 <body>
-
     <?php include "header.php"; ?>
     <?php
     // for ($n = 0; $n < 12; $n++) {
@@ -102,21 +110,16 @@ foreach ($results as $result => $values) {
                     $date1 = $year . "-" . "0" . $month . "-" . str_pad($q, "2", "0", STR_PAD_LEFT);
                 ?>
                     <?php if ($year == date("Y") && $month == date("m") && $q == date("d")) : ?>
-                        <td class="today"> <?php echo $q; ?></td>
+                        <td class="today"> <?php echo $q; ?>
+                            <?php shceduleDisplay($results, $date1); ?>
+                        </td>
                     <?php elseif ($holidays->isHoliday(new DateTime($year . "-" . $month . "-" . $q))) :  ?>
-                        <td class="red"><?php echo $q; ?></td>
+                        <td class="red"><?php echo $q; ?>
+                            <?php shceduleDisplay($results, $date1); ?>
+                        </td>
                     <?php else : ?>
                         <td> <?php echo $q; ?>
-                            <?php foreach ($results as $result => $r) {
-
-                                foreach ($r as $key => $value) {
-
-                                    if ($key == $date1) {
-
-                                        echo '<p><input  type="checkbox" name="input" ><a href="show.php?id=' . $result . '">' . $value . "</a></p> ";
-                                    }
-                                }
-                            } ?>
+                            <?php shceduleDisplay($results, $date1); ?>
                         </td>
                     <?php endif; ?>
                 <?php } ?>
@@ -132,40 +135,18 @@ foreach ($results as $result => $values) {
                     //条件分岐で本日のセルのみ色を変える
                     if ($year == date("Y") && $month == date("m") && $i + 1 == date("d")) : ?>
                         <td class="today"> <?php echo $i + 1; ?>
-                            <?php foreach ($results as $result => $r) {
-                                foreach ($r as $key => $value) {
-
-                                    if ($key == $date2) {
-
-                                        echo '<p><input  type="checkbox" ><a href="show.php?id=' . $result . '">' . $value . "</a></p> ";
-                                    }
-                                }
-                            } ?></td>
+                            <?php shceduleDisplay($results, $date2); ?>
+                        </td>
                         <!-- isHoliday関数で祝日がどうか判断する -->
                     <?php
                     elseif ($holidays->isHoliday(new DateTime($year . "-" . $month . "-" . ($i + 1)))) : ?>
                         <td class="red"> <?php echo $i + 1; ?>
-                            <?php foreach ($results as $result => $r) {
-                                foreach ($r as $key => $value) {
-
-                                    if ($key == $date2) {
-
-                                        echo '<p><input  type="checkbox" ><a href="show.php?id=' . $result . '">' . $value . "</a></p> ";
-                                    }
-                                }
-                            } ?>
+                            <?php shceduleDisplay($results, $date2); ?>
                         </td>
                     <?php else : ?>
                         <td> <?php echo $i + 1; ?>
-                            <?php foreach ($results as $result => $r) {
-                                foreach ($r as $key => $value) {
-
-                                    if ($key == $date2) {
-                                        var_dump($result);
-                                        echo '<p><input  type="checkbox" name="input"><a href="show.php?id=' . $result . '">' . $value . "</a></p> ";
-                                    }
-                                }
-                            } ?></td>
+                            <?php shceduleDisplay($results, $date2); ?>
+                        </td>
                     <?php endif; ?>
                     <!-- カレンダーっぽくするために1周間ごとに改行を入れる -->
                     <?php if ($w == 5) { ?>
@@ -184,7 +165,6 @@ foreach ($results as $result => $values) {
                 <path fill="none" d="M0 0h36v36H0z"></path>
             </svg></a></div> -->
 
-    <script src="modal.js"></script>
     <script src="check.js"></script>
 </body>
 

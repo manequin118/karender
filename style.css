@@ -10,6 +10,10 @@
   margin-right: 20px;
 }
 
+body {
+  margin: 0;
+}
+
 p {
   margin: 0;
 }
@@ -89,7 +93,6 @@ table {
   border: 1px solid lightgrey;
   background-color: lightgrey;
   display: block;
-  position: relative;
 }
 
 .batu::after {
@@ -300,12 +303,19 @@ button {
   height: 0;
   margin: 0 20px;
   text-align: center;
+  /* position: absolute;
+  z-index: 10; */
 }
 
 .active {
-  min-height: 80px !important;
+  min-height: 150px !important;
 }
 
 .header-list li {
   text-align: center;
+  width: 80%;
+}
+
+.list {
+  display: block !important;
 }

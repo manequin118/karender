@@ -28,6 +28,7 @@ $day = date("Y年" .  "m月" . "d日", strtotime($study_day));
 </head>
 
 <body>
+  <?php include "header.php"; ?>
   <div class="show-container">
     <div class="date">日程：<?php echo $day; ?></div>
     <div class="title_header">
@@ -56,6 +57,7 @@ $day = date("Y年" .  "m月" . "d日", strtotime($study_day));
   </div>
 
 
+  <script src="check.js"></script>
 
 </body>
 
