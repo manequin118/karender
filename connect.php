@@ -4,7 +4,7 @@ class connect
   const DB_NAME = "carender";
   const HOST = "localhost";
   const USER = "root";
-  const PASS = "";
+  const PASS = "secret";
 
   //メンバ変数
   protected $dbh;

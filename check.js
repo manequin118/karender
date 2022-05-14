@@ -2,17 +2,17 @@
  *
  * チェックボックスをチェックをしたら予定に横線を入れる
  */
-let checkedBoxes = document.querySelectorAll("input[type='checkbox']");
+// let checkedBoxes = document.querySelectorAll("input[type='checkbox']");
 
-checkedBoxes.forEach((checkedBox) => {
-  checkedBox.addEventListener(
-    "click",
-    () => {
-      checkedBox.parentNode.classList.toggle("shcedule-end");
-    },
-    false
-  );
-});
+// checkedBoxes.forEach((checkedBox) => {
+//   checkedBox.addEventListener(
+//     "click",
+//     () => {
+//       checkedBox.parentNode.classList.toggle("shcedule-end");
+//     },
+//     false
+//   );
+// });
 
 // ヘッダーのプルダウン
 let loginId = document.getElementById("login");
@@ -31,3 +31,29 @@ loginId.addEventListener(
   },
   false
 );
+
+//jQuery
+$(".schedule").on("click", function () {
+  //postメソッドで送るデータを定義 var data = {パラメータ名 : 値};
+  //選択されたチェックボックスの値を配列に保存
+  var checks = [];
+
+  $("input[type='checkbox']:checked").each(function () {
+    checks.push(this.value);
+  });
+  console.log(checks);
+
+  $.ajax({
+    type: "post",
+    url: "ajaxCheck.php",
+    data: {
+      checkbox: checks,
+    },
+    //Ajax通信が成功した場合
+    success: function (data) {
+      //PHPから返ってきたデータの表示
+      console.log(data);
+      // $(data).addClass("shcedule-end");
+    },
+  });
+});

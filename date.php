@@ -51,7 +51,7 @@ function shceduleDisplay($results, $date)
     foreach ($results as $result => $r) {
         foreach ($r as $v => $val) {
             if ($v == $date) {
-                echo '<p><input  type="checkbox" name="input" ><a href="show.php?id=' . $result . '">' . $val . "</a></p> ";
+                echo '<p ><input name="schedule' . $result . '" class="schedule"  type="checkbox" value="' . $result . '"  ><a href="show.php?id=' . $result . '">' . $val . "</a></p> ";
             }
         }
     }
@@ -69,7 +69,7 @@ function shceduleDisplay($results, $date)
     <title>Document</title>
     <script></script>
     <link href="https://unpkg.com/sanitize.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/css/modaal.min.css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
     <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
@@ -164,7 +164,7 @@ function shceduleDisplay($results, $date)
                 <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
                 <path fill="none" d="M0 0h36v36H0z"></path>
             </svg></a></div> -->
-
+    <script src="./node_modules/jquery/dist/jquery.js"></script>
     <script src="check.js"></script>
 </body>
 
