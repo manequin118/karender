@@ -8,6 +8,7 @@ class Shcedule
   private $user_id;
   private $created_at;
   private $updated_at;
+  private $is_done;
 
   public function save()
   {
@@ -55,6 +56,11 @@ class Shcedule
     return $this->updated_at;
   }
 
+  public function getIs_done()
+  {
+    return $this->is_done;
+  }
+
   public function setId($id)
   {
     $this->id = $id;
@@ -83,5 +89,9 @@ class Shcedule
   public function setUpdatedAt($updated_at)
   {
     $this->updated_at = $updated_at;
+  }
+  public function setIs_done($is_done)
+  {
+    $this->is_done = $is_done;
   }
 }

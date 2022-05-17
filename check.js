@@ -32,7 +32,7 @@ loginId.addEventListener(
   false
 );
 
-//jQuery
+//以下jQuery
 $(".schedule").on("click", function () {
   //postメソッドで送るデータを定義 var data = {パラメータ名 : 値};
   //選択されたチェックボックスの値を配列に保存
@@ -50,10 +50,13 @@ $(".schedule").on("click", function () {
       checkbox: checks,
     },
     //Ajax通信が成功した場合
-    success: function (data) {
+    success: function (responce) {
       //PHPから返ってきたデータの表示
-      console.log(data);
+
       // $(data).addClass("shcedule-end");
+
+      const p = $("input[type='checkbox']:checked").parent();
+      p.addClass("shcedule-end");
     },
   });
 });

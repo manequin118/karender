@@ -33,25 +33,36 @@ $shcedules = $queryShcedule->findAllDate($_SESSION["id"]);
 
 
 foreach ($shcedules as $shcedule) {
-    $results[$shcedule->getId()] = array($shcedule->getStudyDay() => $shcedule->getTitle());
+    $results[$shcedule->getId()][$shcedule->getIs_done()] = array($shcedule->getStudyDay() => $shcedule->getTitle());
 }
+// var_dump($doneArray);
 // print_r($id);
 // var_dump($results);
-// print_r($results);
 
-foreach ($results as $result => $r) {
-    foreach ($r as $v => $s) {
-        // var_dump($v);
+
+foreach ($results as $id => $doneshceduleArray) {
+    // print_r($shceduleArray);
+    foreach ($doneshceduleArray as $done => $shceduleArray) {
+
+        foreach ($shceduleArray as $study_day => $title) {
+        }
     }
 }
 
 
 function shceduleDisplay($results, $date)
 {
-    foreach ($results as $result => $r) {
-        foreach ($r as $v => $val) {
-            if ($v == $date) {
-                echo '<p ><input name="schedule' . $result . '" class="schedule"  type="checkbox" value="' . $result . '"  ><a href="show.php?id=' . $result . '">' . $val . "</a></p> ";
+    foreach ($results as $id => $doneshceduleArray) {
+
+        foreach ($doneshceduleArray as $done => $shceduleArray) {
+
+            foreach ($shceduleArray as $study_day => $title) {
+
+                if ($study_day == $date && $done == 0) {
+                    echo '<p ><input name="schedule' . $id . '" class="schedule"  type="checkbox" value="' . $id . '"  ><a href="show.php?id=' . $id . '">' . $title . "</a></p> ";
+                } elseif ($study_day == $date && $done == 1) {
+                    echo '<p class="shcedule-end" ><input name="schedule' . $id . '" class="schedule "  type="checkbox" value="' . $id . '"  ><a href="show.php?id=' . $id . '">' . $title . "</a></p> ";
+                }
             }
         }
     }

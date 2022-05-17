@@ -98,7 +98,7 @@ class QueryShcedule extends connect
 
   public function findAllDate($id)
   {
-    $stmt = $this->dbh->prepare("SELECT shcedule.id,shcedule.title,shcedule.body,shcedule.study_day,shcedule.user_id,shcedule.is_delete FROM shcedule 
+    $stmt = $this->dbh->prepare("SELECT shcedule.id,shcedule.title,shcedule.body,shcedule.study_day,shcedule.user_id,shcedule.is_delete,shcedule.is_done FROM shcedule 
     LEFT JOIN users ON
     shcedule.user_id = users.id
     WHERE is_delete=0 AND user_id=:id  ORDER BY created_at DESC");
@@ -116,6 +116,7 @@ class QueryShcedule extends connect
       $shcedule->setStudyDay($result['study_day']);
       $shcedule->setCreatedAt($result['created_at']);
       $shcedule->setUpdatedAt($result['updated_at']);
+      $shcedule->setIs_done($result['is_done']);
       $shcedules[] = $shcedule;
     }
     return $shcedules;
