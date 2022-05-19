@@ -72,7 +72,7 @@ class QueryShcedule extends connect
 
   public function findAll()
   {
-    $stmt = $this->dbh->prepare("SELECT shcedule.id,shcedule.title,shcedule.body,shcedule.study_day,shcedule.user_id,shcedule.is_delete FROM shcedule 
+    $stmt = $this->dbh->prepare("SELECT shcedule.id,shcedule.title,shcedule.body,shcedule.study_day,shcedule.user_id,shcedule.is_delete,is_done FROM shcedule 
     INNER JOIN users ON
     shcedule.user_id = users.id 
     WHERE is_delete=0 ORDER BY created_at DESC");
@@ -90,6 +90,7 @@ class QueryShcedule extends connect
       $shcedule->setUser_id($result['user_id']);
       $shcedule->setCreatedAt($result['created_at']);
       $shcedule->setUpdatedAt($result['updated_at']);
+      $shcedule->setIs_done($result['is_done']);
       $shcedules[] = $shcedule;
     }
 

@@ -35,7 +35,7 @@ $id = $_SESSION["id"];
       <table class="table ">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>状態</th>
             <th>タイトル</th>
             <th>本文</th>
             <th>日程</th>
@@ -48,7 +48,11 @@ $id = $_SESSION["id"];
             <tr>
               <!-- show.phpのデータの取り方を参考にしたほうがいいかも ↓if文がいるのか -->
               <?php if ($shcedule->getUser_id() == $id) : ?>
-                <td><?php echo $shcedule->getId() ?></td>
+                <?php if ($shcedule->getIs_done() == 1) : ?>
+                  <td>完了！</td>
+                <?php else : ?>
+                  <td>未完了</td>
+                <?php endif; ?>
                 <td><?php echo $shcedule->getTitle() ?></td>
                 <td><?php echo $shcedule->getBody() ?></td>
                 <td><?php echo $shcedule->getStudyDay() ?></td>
