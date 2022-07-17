@@ -2,16 +2,27 @@
 include 'connect.php';
 include "queryShcedule.php";
 include "shcedule.php";
+include "memo.php";
+
 if (isset($_GET['id'])) {
+  $shcedule_id = $_GET["id"];
 
   $queryShcedule = new QueryShcedule();
-  $shcedule = $queryShcedule->find($_GET['id']);
+  $shcedule = $queryShcedule->find($shcedule_id);
   if ($shcedule) {
     $title = $shcedule->getTitle();
     $body = $shcedule->getBody();
     $study_day = $shcedule->getStudyDay();
+    $is_done = $shcedule->getIs_done();
   }
+  $memos = $queryShcedule->findAllMemo($shcedule_id);
 }
+
+
+// if (isset($_POST["comment_body"])) {
+//   $comment = filter_input(INPUT_POST, "comment_body");
+//   var_dump($comment);
+// }
 
 $day = date("Y年" .  "m月" . "d日", strtotime($study_day));
 
@@ -39,24 +50,31 @@ $day = date("Y年" .  "m月" . "d日", strtotime($study_day));
       学習内容
       <p> <?php echo $body; ?></p>
     </div>
-    <form action="" method="post">
-      <input type="text">
-      <input type="hidden" name="comment" id="">
-    </form>
-    <div id="result">
 
+    <input type="text" name="comment" id="comment_body">
+    <input type="hidden" name="id" id="shcedule_id" value="<?php echo $shcedule_id; ?>">
+    <input type="submit" value="送信" id="comment_button">
+
+    <div id="result">
+      <p>メモ内容…</p>
+      <ul id="comment">
+        <?php foreach ($memos as $memo) : ?>
+          <li id="<?php echo $memo->getId(); ?>"><?php echo  $memo->getMemo_body();  ?>
+            <input type="submit" value="✖️" id="comment_delete" data-id="<?php echo $memo->getId(); ?>"></input>
+            <input type="hidden" data-id="<?php echo $memo->getId(); ?>" id="comment_id"></input>
+          </li>
+
+        <?php endforeach; ?>
+      </ul>
     </div>
 
-    <div class="under-body">
+    <!-- <div class="under-body">
 
       <a href="date.php">カレンダーへ</a>
       <a href="index.php">一覧へ</a>
-    </div>
-
-
+    </div> -->
   </div>
-
-
+  <script src="./node_modules/jquery/dist/jquery.js"></script>
   <script src="check.js"></script>
 
 </body>

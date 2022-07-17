@@ -19,21 +19,23 @@ if (!empty($_POST['title']) && !empty($_POST['body']) && !empty($_POST['study_da
   $study_day = $_POST["study_day"];
   $user_id = $_SESSION["id"];
 
-  $db = new connect();
-  $sql = "INSERT INTO shcedule (title,body,study_day,user_id,created_at, updated_at)
-  VALUES (:title,:body,:study_day,:user_id, NOW(), NOW())";
-  $result = $db->query($sql, array(':title' => $title, ':body' => $body, ":study_day" => $study_day, ":user_id" => $user_id));
-  // var_dump($result);
-  // exit;
 
-  header('Location: index.php');
+  // $db = new connect();
+  // $sql = "INSERT INTO shcedule (title,body,study_day,user_id,created_at, updated_at)
+  // VALUES (:title,:body,:study_day,:user_id, NOW(), NOW())";
 
-  // $shcedule = new Shcedule();
-  // $shcedule->setTitle($title);
-  // $shcedule->setBody($body);
-  // $shcedule->setStudyDay($study_day);
-  // $shcedule->save();
+  // $result = $db->query($sql, array(':title' => $title, ':body' => $body, ":study_day" => $study_day, ":user_id" => $user_id));
+
+
   // header('Location: index.php');
+
+  $shcedule = new Shcedule();
+  $shcedule->setTitle($title);
+  $shcedule->setBody($body);
+  $shcedule->setStudyDay($study_day);
+  $shcedule->setUser_id($user_id);
+  $shcedule->save();
+  header('Location: index.php');
 } else if (!empty($_POST)) {
   // POSTメソッドで送信されたが、titleかbodyが足りないとき
   // 存在するほうは変数へ、ない場合空文字にしてフォームのvalueに設定する
@@ -77,6 +79,7 @@ if (!empty($_POST['title']) && !empty($_POST['body']) && !empty($_POST['study_da
         <button type="submit">送信する</button>
       </form>
     </div>
+
     <a href="date.php">カレンダーへ</a>
     <a href="index.php">一覧へ</a>
   </div>

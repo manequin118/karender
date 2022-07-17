@@ -32,11 +32,13 @@ class QueryShcedule extends connect
       $title = $this->shcedule->getTitle();
       $body = $this->shcedule->getBody();
       $study_day = $this->shcedule->getStudyDay();
-      $stmt = $this->dbh->prepare("INSERT INTO shcedule (title,body,study_day,created_at,updated_at)
-        VALUES (:title,:body,:study_day,NOW(),NOW())");
+      $user_id = $this->shcedule->getUser_Id();
+      $stmt = $this->dbh->prepare("INSERT INTO shcedule (title,body,study_day,user_id,created_at,updated_at)
+        VALUES (:title,:body,:study_day,:user_id,NOW(),NOW())");
       $stmt->bindParam(":title", $title, PDO::PARAM_STR);
       $stmt->bindParam(":body", $body, PDO::PARAM_STR);
-      $stmt->bindParam(":study_day", $study_day, PDO::PARAM_INT);
+      $stmt->bindParam(":study_day", $study_day, PDO::PARAM_STR);
+      $stmt->bindParam(":user_id", $user_id, PDO::PARAM_STR);
       $stmt->execute();
     }
   }
@@ -66,8 +68,27 @@ class QueryShcedule extends connect
       $shcedule->setStudyDay($result['study_day']);
       $shcedule->setCreatedAt($result['created_at']);
       $shcedule->setUpdatedAt($result['updated_at']);
+      $shcedule->setIs_done($result["is_done"]);
     }
     return $shcedule;
+  }
+  public function findAllMemo($id)
+  {
+    $stmt = $this->dbh->prepare("SELECT memo.id , memo.memo_body , memo.shcedule_id FROM memo WHERE shcedule_id=:id ");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // var_dump($results);
+    $memos = array();
+    foreach ($results as $result) {
+      $memo = new Memo();
+      $memo->setId($result['id']);
+      $memo->setMemo_body($result['memo_body']);
+      $memo->setShcedule_id($result['shcedule_id']);
+      $memos[] = $memo;
+    }
+
+    return $memos;
   }
 
   public function findAll()

@@ -221,10 +221,6 @@ button {
   font-size: 20px;
 }
 
-.under-body {
-  text-align: right;
-}
-
 .show-container input {
   width: 100%;
   height: 40px;
@@ -318,4 +314,21 @@ button {
 
 .list {
   display: block !important;
+}
+
+#comment_button {
+  width: 20%;
+  background-color: #ddd;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-left: 80%;
+}
+
+#result input {
+  background-color: #fff;
+  border: none;
+  display: inline-block;
+  width: auto;
+  cursor: pointer;
+  margin-left: 10%;
 }
