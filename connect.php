@@ -3,8 +3,8 @@ class connect
 {
   const DB_NAME = "carender";
   const HOST = "localhost";
-  const USER = "root";
-  const PASS = "secret";
+  const USER = "root"; //root myuser
+  const PASS = "secret"; //secret Sakana118@
 
   //メンバ変数
   protected $dbh;

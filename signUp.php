@@ -48,9 +48,9 @@ if (!empty($_POST["name"]) && !empty($_POST["password"])) {
       <h1 class="loginHeader">新規ユーザー登録
       </h1>
       <?php
-      if (!is_null($err)) {
-        echo '<div class="alert alert-danger">' . $err . '</div>';
-      }
+      // if (!is_null($err)) {
+      //   echo '<div class="alert alert-danger">' . $err . '</div>';
+      // }
       ?>
       <label class="visually-hidden">ユーザ名</label>
       <input type="text" name="name" class="form-control" placeholder="ユーザ名" required autofocus>

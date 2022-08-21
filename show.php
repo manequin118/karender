@@ -1,6 +1,6 @@
 <?php
 include 'connect.php';
-include "queryShcedule.php";
+include "QueryShcedule.php";
 include "shcedule.php";
 include "memo.php";
 

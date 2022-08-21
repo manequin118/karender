@@ -332,3 +332,59 @@ button {
   cursor: pointer;
   margin-left: 10%;
 }
+
+.is-sp {
+  display: none;
+}
+
+@media screen and (max-width: 780px) {
+  .currentMonth {
+    width: auto;
+  }
+  .arrow h1 {
+    font-size: 5vw;
+  }
+
+  table td {
+    width: 80%;
+    display: block;
+    margin: 0 auto;
+  }
+  .youbi {
+    display: none;
+  }
+  .show-container {
+    width: auto;
+    margin: 5vw;
+  }
+  .shcedule-container {
+    width: auto;
+    margin: 5vw;
+  }
+
+  .is-sp {
+    display: inline-block;
+  }
+
+  .is-pc {
+    display: none;
+  }
+  .form-signin label {
+    text-align: center;
+  }
+  .form-signin label {
+    width: auto;
+  }
+  .form-signin button {
+    width: auto;
+  }
+  .form-signin {
+    width: auto;
+  }
+  .form-signin input {
+    width: 70%;
+  }
+  .arrow {
+    margin: 10vw 0;
+  }
+}

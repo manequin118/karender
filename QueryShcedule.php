@@ -93,7 +93,7 @@ class QueryShcedule extends connect
 
   public function findAll()
   {
-    $stmt = $this->dbh->prepare("SELECT shcedule.id,shcedule.title,shcedule.body,shcedule.study_day,shcedule.user_id,shcedule.is_delete,is_done FROM shcedule 
+    $stmt = $this->dbh->prepare("SELECT shcedule.id,shcedule.title,shcedule.body,shcedule.study_day,shcedule.user_id,shcedule.is_delete,is_done,created_at,updated_at FROM shcedule 
     INNER JOIN users ON
     shcedule.user_id = users.id 
     WHERE is_delete=0 ORDER BY created_at DESC");
@@ -120,7 +120,7 @@ class QueryShcedule extends connect
 
   public function findAllDate($id)
   {
-    $stmt = $this->dbh->prepare("SELECT shcedule.id,shcedule.title,shcedule.body,shcedule.study_day,shcedule.user_id,shcedule.is_delete,shcedule.is_done FROM shcedule 
+    $stmt = $this->dbh->prepare("SELECT shcedule.id,shcedule.title,shcedule.body,shcedule.study_day,shcedule.user_id,shcedule.is_delete,shcedule.is_done,created_at,updated_at FROM shcedule 
     LEFT JOIN users ON
     shcedule.user_id = users.id
     WHERE is_delete=0 AND user_id=:id  ORDER BY created_at DESC");
