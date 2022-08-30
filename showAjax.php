@@ -5,7 +5,7 @@ use PhpParser\Comment;
 include "secure.php";
 include 'connect.php';
 include "shcedule.php";
-include "queryShcedule.php";
+include "QueryShcedule.php";
 
 if (isset($_POST["comment_body"]) && isset($_POST['id'])) {
   $comment = filter_input(INPUT_POST, "comment_body");
@@ -19,7 +19,11 @@ if (isset($_POST["comment_body"]) && isset($_POST['id'])) {
   VALUE (:memo_body,:shcedule_id,NOW(), NOW())";
 
   $result = $db->query($sql, array(':memo_body' => $comment, ':shcedule_id' => $id));
-  $responce = array("comment" => $comment, "id" => $id);
+
+
+  $memo_id = $db->dbh->lastInsertId();
+  $responce = array("comment" => $comment, "id" => $id, "memo_id" => $memo_id);
+
 
   echo json_encode($responce);
   exit;

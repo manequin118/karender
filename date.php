@@ -48,9 +48,15 @@ function shceduleDisplay($results, $date)
             foreach ($shceduleArray as $study_day => $title) {
 
                 if ($study_day == $date && $done == 0) {
-                    echo '<p ><input name="schedule' . $id . '" class="schedule"  type="checkbox" value="' . $id . '"  ><a href="show.php?id=' . $id . '">' . $title . "</a></p> ";
+                    echo '<p >
+                    <input name="schedule' . $id . '" class="schedule"  type="checkbox" value="' . $id . '"  >
+                    <a href="show.php?id=' . $id . '">' . $title . "</a>
+                    </p> ";
                 } elseif ($study_day == $date && $done == 1) {
-                    echo '<p class="shcedule-end" ><input name="schedule' . $id . '" class="schedule "  type="checkbox" value="' . $id . '"  ><a href="show.php?id=' . $id . '">' . $title . "</a></p> ";
+                    echo '<p class="shcedule-end" >
+                    <input name="schedule' . $id . '" class="schedule "  type="checkbox" checked value="' . $id . '"  >
+                    <a href="show.php?id=' . $id . '">' . $title . "</a>
+                    </p> ";
                 }
             }
         }

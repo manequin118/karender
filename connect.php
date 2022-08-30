@@ -3,11 +3,11 @@ class connect
 {
   const DB_NAME = "carender";
   const HOST = "localhost";
-  const USER = "root"; //root myuser
-  const PASS = "secret"; //secret Sakana118@
+  const USER = "myuser"; //root myuser
+  const PASS = "Sakana118@"; //secret Sakana118@
 
   //メンバ変数
-  protected $dbh;
+  public $dbh;
 
   //mysqlに接続
   public function __construct()

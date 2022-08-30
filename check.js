@@ -75,12 +75,22 @@ $("#comment_button").on("click", () => {
     },
     datatype: "json",
     success: function (responce) {
-      console.log(responce.comment);
+      console.log(responce);
 
-      $("#result ul").append("<li>" + responce.comment + "</li>" + "</br>");
-      // $("#result ul li").append(
-      //   '  <input type="submit" value="✖️" id="comment_delete"></input>'
-      // );
+      $("#result ul").append(
+        "<li id=" +
+          responce.memo_id +
+          ">" +
+          responce.comment +
+          "  <input type='submit' value='✖️' class='comment_delete' data-id=" +
+          responce.memo_id +
+          "></input>" +
+          "<input type='hidden' data-id=" +
+          responce.memo_id +
+          " class='comment_id'></input>" +
+          "</li>"
+      );
+
       console.log("通信成功");
     },
     error: function (responce) {
@@ -92,8 +102,8 @@ $("#comment_button").on("click", () => {
 });
 
 //コメント削除ボタン
-$("#comment_delete").on("click", () => {
-  const comment_id = $(this).data("comment_id");
+$(document).on("click", ".comment_delete", () => {
+  const comment_id = $(".comment_delete").data("id");
   console.log(comment_id);
   $.ajax({
     type: "post",
@@ -102,8 +112,11 @@ $("#comment_delete").on("click", () => {
       id: comment_id,
       _method: "DELETE",
     },
+    datatype: "json",
     success: function (responce) {
-      $("#comment li").remove();
+      console.log(responce);
+      const deleteLi = $(`#${responce.comment_id}`);
+      deleteLi.remove();
     },
   });
 });

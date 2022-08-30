@@ -59,9 +59,10 @@ $day = date("Y年" .  "m月" . "d日", strtotime($study_day));
       <p>メモ内容…</p>
       <ul id="comment">
         <?php foreach ($memos as $memo) : ?>
-          <li id="<?php echo $memo->getId(); ?>"><?php echo  $memo->getMemo_body();  ?>
-            <input type="submit" value="✖️" id="comment_delete" data-id="<?php echo $memo->getId(); ?>"></input>
-            <input type="hidden" data-id="<?php echo $memo->getId(); ?>" id="comment_id"></input>
+          <li id="<?php echo $memo->getId(); ?>">
+            <?php echo  $memo->getMemo_body();  ?>
+            <input type="submit" value="✖️" class="comment_delete" data-id="<?php echo $memo->getId(); ?>"></input>
+            <input type="hidden" data-id="<?php echo $memo->getId(); ?>" class="comment_id"></input>
           </li>
 
         <?php endforeach; ?>
