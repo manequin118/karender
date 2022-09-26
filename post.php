@@ -35,7 +35,7 @@ if (!empty($_POST['title']) && !empty($_POST['body']) && !empty($_POST['study_da
   $shcedule->setStudyDay($study_day);
   $shcedule->setUser_id($user_id);
   $shcedule->save();
-  header('Location: index.php');
+  header('Location: date.php');
 } else if (!empty($_POST)) {
   // POSTメソッドで送信されたが、titleかbodyが足りないとき
   // 存在するほうは変数へ、ない場合空文字にしてフォームのvalueに設定する
@@ -50,6 +50,11 @@ if (!empty($_POST['title']) && !empty($_POST['body']) && !empty($_POST['study_da
   } else {
     $body_alert = "本文を入力してください。";
   }
+  if (!empty($_POST['study_day'])) {
+    $study_day = $_POST['study_day'];
+  } else {
+    $study_day_alert = "日付けを指定してください。";
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -59,7 +64,7 @@ if (!empty($_POST['title']) && !empty($_POST['body']) && !empty($_POST['study_da
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>学習カレンダー</title>
   <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
@@ -69,12 +74,13 @@ if (!empty($_POST['title']) && !empty($_POST['body']) && !empty($_POST['study_da
     <div class="post-contents">
       <form action="post.php" method="post">
         <label for="">タイトル</label>
-        <?php echo !empty($title_alert) ?  $title_alert  : '' ?>
+        <p class="alert"><?php echo !empty($title_alert) ?  $title_alert  : '' ?></p>
         <input type="text" name="title" value="<?php echo $title; ?>">
         <label for="">内容</label>
-        <?php echo !empty($body_alert) ?  $body_alert : '' ?>
+        <p class="alert"><?php echo !empty($body_alert) ?  $body_alert : '' ?></p>
         <input type="text" name="body" value="<?php echo $body; ?>">
         <label for="">日程</label>
+        <p class="alert"><?php echo !empty($study_day_alert) ?  $study_day_alert : '' ?></p>
         <input type="date" name="study_day">
         <button type="submit">送信する</button>
       </form>

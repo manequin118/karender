@@ -1,18 +1,7 @@
-/**
- *
- * チェックボックスをチェックをしたら予定に横線を入れる
- */
-// let checkedBoxes = document.querySelectorAll("input[type='checkbox']");
-
-// checkedBoxes.forEach((checkedBox) => {
-//   checkedBox.addEventListener(
-//     "click",
-//     () => {
-//       checkedBox.parentNode.classList.toggle("shcedule-end");
-//     },
-//     false
-//   );
-// });
+//スマホ画面ハンバーガーメニュー
+document.getElementById("navbtn").onclick = function () {
+  document.querySelector("html").classList.toggle("open");
+};
 
 // ヘッダーのプルダウン
 let loginId = document.getElementById("login");
@@ -90,6 +79,8 @@ $("#comment_button").on("click", () => {
           " class='comment_id'></input>" +
           "</li>"
       );
+      const commentBody = document.getElementById("comment_body");
+      commentBody.value = "";
 
       console.log("通信成功");
     },

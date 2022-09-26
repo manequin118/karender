@@ -1,10 +1,13 @@
 <?php
+include 'config.php';
+
 class connect
 {
+
   const DB_NAME = "carender";
   const HOST = "localhost";
-  const USER = "myuser"; //root myuser
-  const PASS = "Sakana118@"; //secret Sakana118@
+  const USER = "root"; //root myuser
+  const PASS = "secret"; //secret Sakana118@
 
   //メンバ変数
   public $dbh;

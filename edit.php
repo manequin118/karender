@@ -66,6 +66,11 @@ if (isset($_GET['id'])) {
   } else {
     $body_alert = "本文を入力してください。";
   }
+  if (!empty($_POST['study_day'])) {
+    $study_day = $_POST['study_day'];
+  } else {
+    $study_day_alert = "日付けを指定してください。";
+  }
 }
 
 
@@ -78,7 +83,7 @@ if (isset($_GET['id'])) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>学習カレンダー</title>
   <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
@@ -89,18 +94,18 @@ if (isset($_GET['id'])) {
       <form action="edit.php" method="post">
         <input type="hidden" name="id" value="<?php echo $id ?>">
         <label for="">タイトル</label>
-        <?php echo !empty($title_alert) ?  $title_alert  : '' ?>
+        <p class="alert"> <?php echo !empty($title_alert) ?  $title_alert  : '' ?></p>
         <input type="text" name="title" value="<?php echo $title; ?>">
         <label for="">内容</label>
-        <?php echo !empty($body_alert) ?  $body_alert : '' ?>
+        <p class="alert"><?php echo !empty($body_alert) ?  $body_alert : '' ?></p>
         <input type="text" name="body" value="<?php echo $body; ?>">
         <label for="">日程</label>
+        <p class="alert"><?php echo !empty($study_day_alert) ?  $study_day_alert : '' ?></p>
         <input type="date" name="study_day">
+
         <button type="submit">送信する</button>
       </form>
     </div>
-    <a href="date.php">カレンダーへ</a>
-    <a onclick="return confirm('本当に削除してよろしいですか?')" href="delete.php?id=<?php echo $shcedule->getId() ?>" class="">削除</a>
   </div>
   <script src="check.js"></script>
 

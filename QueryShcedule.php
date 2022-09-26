@@ -72,6 +72,31 @@ class QueryShcedule extends connect
     }
     return $shcedule;
   }
+
+  public function scheduleOneDay($study_day, $id)
+  {
+    $stmt = $this->dbh->prepare("SELECT * FROM shcedule WHERE study_day=:study_day AND user_id =:user_id  AND is_delete=0");
+    $stmt->bindParam(':study_day', $study_day, PDO::PARAM_STR);
+    $stmt->bindParam(':user_id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $shcedules = array();
+    foreach ($results as $result) {
+      $shcedule = new Shcedule();
+      $shcedule->setId($result['id']);
+      $shcedule->setTitle($result['title']);
+      $shcedule->setBody($result['body']);
+      $shcedule->setUser_id($result['user_id']);
+      $shcedule->setStudyDay($result['study_day']);
+      $shcedule->setCreatedAt($result['created_at']);
+      $shcedule->setUpdatedAt($result['updated_at']);
+      $shcedule->setIs_done($result["is_done"]);
+      $shcedules[] = $shcedule;
+    }
+    return $shcedules;
+  }
+
+
   public function findAllMemo($id)
   {
     $stmt = $this->dbh->prepare("SELECT memo.id , memo.memo_body , memo.shcedule_id FROM memo WHERE shcedule_id=:id ");
@@ -96,7 +121,8 @@ class QueryShcedule extends connect
     $stmt = $this->dbh->prepare("SELECT shcedule.id,shcedule.title,shcedule.body,shcedule.study_day,shcedule.user_id,shcedule.is_delete,is_done,created_at,updated_at FROM shcedule 
     INNER JOIN users ON
     shcedule.user_id = users.id 
-    WHERE is_delete=0 ORDER BY created_at DESC");
+    WHERE is_delete=0 AND DATE_FORMAT(created_at, '%Y%m') = DATE_FORMAT(NOW(), '%Y%m')
+    ORDER BY created_at DESC");
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     // print_r($results);
@@ -117,6 +143,8 @@ class QueryShcedule extends connect
 
     return $shcedules;
   }
+
+
 
   public function findAllDate($id)
   {

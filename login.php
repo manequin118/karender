@@ -48,7 +48,7 @@ if (isset($_POST['name']) && isset($_POST['password'])) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>学習カレンダー</title>
   <link rel="stylesheet" type="text/css" href="./style.css">
 
 </head>
@@ -64,6 +64,11 @@ if (isset($_POST['name']) && isset($_POST['password'])) {
         echo '<div class="alert alert-danger">' . $err . '</div>';
       }
       ?>
+      <div>
+        <p>※テストユーザーのログイン方法</p>
+        <p>ユーザー名：test</p>
+        <p>パスワード：test</p>
+      </div>
       <label class="visually-hidden">ユーザ名</label>
       <input type="text" name="name" class="form-control" placeholder="ユーザ名" required autofocus>
       <label class="visually-hidden">パスワード</label>

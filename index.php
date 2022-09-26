@@ -14,6 +14,8 @@ $users = $queryUser->find();
 
 $id = $_SESSION["id"];
 
+$month = substr(date("m"), 1);
+
 
 ?>
 <!DOCTYPE html>
@@ -23,17 +25,17 @@ $id = $_SESSION["id"];
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>学習カレンダー</title>
   <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
 <body>
   <?php include "header.php"; ?>
   <div class="shcedule-container">
-    <h2><?php  ?></h2>
+    <h2><?php echo  $month; ?>月の予定一覧</h2>
     <?php if ($shcedules) : ?>
-      <table class="table ">
-        <thead>
+      <table class="table">
+        <thead class="is-pc">
           <tr>
             <th>状態</th>
             <th>タイトル</th>
@@ -42,7 +44,7 @@ $id = $_SESSION["id"];
             <th>ボタン</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="is-pc">
           <?php foreach ($shcedules as $shcedule) :
           ?>
             <tr>
@@ -56,11 +58,37 @@ $id = $_SESSION["id"];
                 <td><?php echo $shcedule->getTitle() ?></td>
                 <td><?php echo $shcedule->getBody() ?></td>
                 <td><?php echo $shcedule->getStudyDay() ?></td>
-                <td><a href="edit.php?id=<?php echo $shcedule->getId() ?>" class="">編集</a>
+                <td>
+                  <a class="edit" href="edit.php?id=<?php echo $shcedule->getId() ?>" class="">編集</a>
+                  <a class="delete" onclick="return confirm('本当に削除してよろしいですか?')" href="delete.php?id=<?php echo $shcedule->getId() ?>" class="">削除</a>
                 </td>
             </tr>
           <?php endif; ?>
         <?php endforeach; ?>
+        </tbody>
+        <thead class="is-sp sphead">
+          <tr>
+            <th>タイトル、内容</th>
+            <th>日付</th>
+          </tr>
+        </thead>
+        <tbody class="is-sp list">
+          <?php foreach ($shcedules as $shcedule) :
+          ?>
+            <tr>
+              <td><span><?php echo $shcedule->getTitle() ?></span>
+                <span><?php echo $shcedule->getBody() ?></span>
+              </td>
+              <td><?php echo $shcedule->getStudyDay() ?>
+                <span>
+                  <a class="edit" href="edit.php?id=<?php echo $shcedule->getId() ?>" class="">編集</a>
+                </span>
+                <span>
+                  <a class="delete" onclick="return confirm('本当に削除してよろしいですか?')" href="delete.php?id=<?php echo $shcedule->getId() ?>" class="">削除</a>
+                </span>
+              </td>
+            </tr>
+          <?php endforeach; ?>
         </tbody>
       </table>
     <?php else : ?>
@@ -68,14 +96,7 @@ $id = $_SESSION["id"];
         <p>記事はありません。</p>
       </div>
     <?php endif; ?>
-    <!-- <div class="Gw6Zhc"><a href="post.php"><svg width="100" height="100s" viewBox="0 0 36 36">
-          <path fill="#34A853" d="M16 16v14h4V20z"></path>
-          <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
-          <path fill="#FBBC05" d="M6 16v4h10l4-4z"></path>
-          <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
-          <path fill="none" d="M0 0h36v36H0z"></path>
-        </svg></a></div>
-  </div> -->
+
     <script src="check.js"></script>
 </body>
 

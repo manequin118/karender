@@ -14,6 +14,11 @@ body {
   margin: 0;
 }
 
+img {
+  width: 100%;
+  height: auto;
+}
+
 p {
   margin: 0;
 }
@@ -26,11 +31,28 @@ a {
   font-size: 23px;
   text-decoration: none;
   color: #000;
+  width: 300px;
+}
+
+.arrow a.right {
+  text-align: right;
 }
 
 .currentMonth {
   width: 1000px;
   margin: 0 auto;
+}
+
+.currentMonth td a {
+  width: 100%;
+  height: 100px;
+  display: block;
+  overflow: hidden;
+}
+.currentMonth td a:hover {
+  background-color: #c0f69f;
+  opacity: 0.5;
+  cursor: pointer;
 }
 
 h1 {
@@ -43,6 +65,7 @@ table th {
   text-align: left;
   vertical-align: baseline;
   background-color: #dddddd;
+  padding: 5px;
 }
 
 table td {
@@ -70,6 +93,21 @@ table {
 
 .shcedule-end {
   text-decoration: line-through;
+}
+
+.edit {
+  background-color: #1ce31c;
+  color: #fff;
+  padding: 5px;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+
+.delete {
+  background-color: #f05d5d;
+  color: #fff;
+  padding: 5px;
+  border-radius: 6px;
 }
 
 /*post.php*/
@@ -110,6 +148,9 @@ table {
   cursor: pointer;
 }
 
+.shcedule-container table td {
+  padding: 5px;
+}
 .batu::before {
   content: "";
   display: block;
@@ -304,8 +345,9 @@ button {
   font-size: 15px;
 }
 
-.active {
+ul.active {
   min-height: 150px !important;
+  display: block;
 }
 
 .header-list li {
@@ -313,9 +355,9 @@ button {
   width: 80%;
 }
 
-.list {
+/* .list {
   display: block !important;
-}
+} */
 
 #comment_button {
   width: 20%;
@@ -334,8 +376,68 @@ button {
   margin-left: 10%;
 }
 
+.day-card {
+  /* border-bottom: 1px solid #beb1b1; */
+  padding: 10px;
+  width: 97%;
+  margin: 30px auto 0;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
+/* .day-card {
+  width: auto;
+  text-align: right;
+  display: block;
+} */
+
+.day-card a {
+  width: 95%;
+  display: inline-block;
+  font-size: 25px;
+}
+
+.day-card p {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.day-card a:hover {
+  opacity: 0.5;
+}
+
+.day-container {
+  width: 800px;
+  margin: 100px auto;
+  padding: 50px 15px;
+}
+
 .is-sp {
   display: none;
+}
+
+.spView {
+  display: none;
+}
+
+.not-schedule {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.not-schedule > div {
+  width: 200px;
+  margin: 0 auto;
+}
+
+.not-schedule p {
+  text-align: center;
+  font-size: 25px;
+  margin-top: 30px;
+}
+
+.alert {
+  color: #f05d5d;
 }
 
 @media screen and (max-width: 780px) {
@@ -368,7 +470,7 @@ button {
   }
 
   .is-pc {
-    display: none;
+    display: none !important;
   }
   .form-signin label {
     text-align: center;
@@ -386,6 +488,116 @@ button {
     width: 70%;
   }
   .arrow {
-    margin: 10vw 0;
+    margin: 10vw 0 2vw;
+  }
+  .arrow a {
+    width: auto;
+    font-size: 4.5vw;
+  }
+
+  .spView {
+    display: block;
+  }
+  .open .nav {
+    visibility: visible;
+    opacity: 1;
+  }
+  .nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(92, 89, 89, 0.9);
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 1;
+    transition: 0.2s ease-in-out;
+    z-index: 1000;
+  }
+
+  #navbtn {
+    position: fixed;
+    top: 30px;
+    right: 5%;
+    padding: 0;
+    outline: none;
+    border: none;
+    background: none;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  #navbtn::before,
+  #navbtn::after {
+    content: "";
+    display: block;
+    height: 1px;
+    background-color: #fff;
+    transform: translateY(10px);
+    transition: 0.3s ease-in-out;
+    z-index: 1000;
+  }
+  #navbtn::before {
+    transform: translateY(-10px);
+    box-shadow: 0 10px #fff;
+  }
+  .open #navbtn::before {
+    transform: rotate(-45deg);
+    box-shadow: none;
+  }
+  .open #navbtn::after {
+    transform: rotate(45deg);
+    box-shadow: none;
+  }
+  .header-nav ul {
+    display: block;
+  }
+  .post-container {
+    width: auto;
+    margin: 10vw auto;
+  }
+  .post-contents form {
+    width: auto;
+  }
+  .post-contents input {
+    width: 100%;
+  }
+
+  tbody.list td {
+    display: table-cell;
+  }
+  tbody.list td:first-of-type {
+    width: 70%;
+  }
+  thead.sphead {
+    width: 100%;
+    display: table;
+  }
+  .list td span {
+    display: block;
+    margin-top: 3vw;
+  }
+  .header-list li {
+    text-align: center;
+    width: 100%;
+  }
+  tbody.list {
+    width: 100%;
+  }
+  .day-container {
+    width: auto;
+  }
+  .not-schedule > div {
+    width: 50%;
+    margin: 0 auto;
+  }
+  .not-schedule p {
+    font-size: 6vw;
   }
 }
